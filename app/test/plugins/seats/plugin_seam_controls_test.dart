@@ -129,10 +129,9 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(PluginSeatPage), findsOneWidget);
     expect(find.byType(FakeIsland), findsNothing);
-    expect(find.text('在网页版打开'), findsOneWidget);
-    await tester.tap(find.text('在网页版打开'));
+    expect(find.text('在网页版打开'), findsNothing);
     await tester.pumpAndSettle();
-    expect(openedWeb, hasLength(1));
+    expect(openedWeb, isEmpty);
   });
 
   testWidgets('ui.json wins, locks the switch and can restore the saved local choice', (tester) async {

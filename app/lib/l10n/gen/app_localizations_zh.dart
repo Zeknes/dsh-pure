@@ -3268,10 +3268,10 @@ class L10nZh extends L10n {
   String get botsMobileUnsupportedTitle => 'DS Bot 暂不支持手机端';
 
   @override
-  String get botsMobileApiRequired => '可先在网页版中使用';
+  String get botsMobileApiRequired => '当前主机的插件暂不支持手机端，请更新插件后重试';
 
   @override
-  String get botsMobileApiMissing => '手机端暂不支持，可先在网页版中使用';
+  String get botsMobileApiMissing => '手机端暂不支持，请安装或更新插件';
 
   @override
   String get botsCreationConnectionChanged => '连接已变化，请重新打开创建页面后再操作。';
@@ -3536,9 +3536,6 @@ class L10nZh extends L10n {
 
   @override
   String get catalogDiagnosticsSummary => '导出诊断包';
-
-  @override
-  String get catalogWebSummary => 'DSH 官方界面';
 
   @override
   String get catalogPluginPanel => '插件面板';
@@ -4814,9 +4811,6 @@ class L10nZh extends L10n {
 
   @override
   String get commonOpenWith => '用其他应用打开';
-
-  @override
-  String get commonOpenInWeb => '在网页版打开';
 
   @override
   String get commonUntitledChat => '未命名对话';
@@ -7082,9 +7076,6 @@ class L10nZh extends L10n {
   String get engineModelNeedLevel => '至少选一个档位';
 
   @override
-  String get engineFieldEditOnWeb => '在网页版编辑此项';
-
-  @override
   String get engineSettingsHostChanged => '主机已切换，请重新打开设置后编辑。';
 
   @override
@@ -8548,12 +8539,6 @@ class L10nZh extends L10n {
   String get hubSettingsCollapseStepsHint => '思考与工具调用收成一行';
 
   @override
-  String get hubSettingsWebPhoneLayout => '网页版手机布局';
-
-  @override
-  String get hubSettingsWebPhoneLayoutHint => '为手机屏幕重排网页版';
-
-  @override
   String get hubSettingsEngineExtensions => '引擎与扩展';
 
   @override
@@ -8826,12 +8811,6 @@ class L10nZh extends L10n {
 
   @override
   String get hubInterfaceHome => '首页';
-
-  @override
-  String get hubInterfaceWebHint => 'DSH 官方网页版';
-
-  @override
-  String get hubInterfaceOpenWeb => '打开网页版';
 
   @override
   String get hubInterfacePhoneLayout => '手机布局';
@@ -12289,12 +12268,6 @@ class L10nZh extends L10n {
 
   @override
   String get pluginConfigNoMatch => '没有匹配的设置';
-
-  @override
-  String get pluginConfigOpenWeb => '在网页版设置';
-
-  @override
-  String get pluginConfigOpenWebHint => '插件自带的设置页';
 
   @override
   String get pluginConfigResetAll => '全部恢复默认';
@@ -16128,9 +16101,6 @@ class L10nZh extends L10n {
   String get searchKwAgentPresets => '预设,模式,工作方式';
 
   @override
-  String get searchKwUiMode => '原生,网页,网页模式,界面,切换界面';
-
-  @override
   String get searchKwLanguage => '中文,英文,简体,English';
 
   @override
@@ -16152,13 +16122,7 @@ class L10nZh extends L10n {
   String get searchKwFoldTurns => '收起,折叠,过程,步骤';
 
   @override
-  String get searchKwWebPhoneLayout => '网页版手机布局,布局';
-
-  @override
   String get searchKwShareConfig => '分享,导出配置,分享码,配置';
-
-  @override
-  String get searchKwOpenWeb => '网页版,网页,浏览器,官方网页版';
 
   @override
   String get searchKwSafeMode => '安全模式,恢复正常模式,排障,插件崩溃';
@@ -16350,15 +16314,6 @@ class L10nZh extends L10n {
 
   @override
   String get searchKwPhoneConfirmEntry => '确认方式,手机操控,免确认';
-
-  @override
-  String get searchKwWebCodingView => '代码视图,工作视图,网页版';
-
-  @override
-  String get searchKwWebCollapse => '工作步骤,收起,折叠,网页版';
-
-  @override
-  String get searchKwWebBusySend => '发送,排队,插话,AI 工作时';
 
   @override
   String get searchKwPluginsMarket => '插件市场,安装插件,市场,获取插件';
@@ -17060,7 +17015,7 @@ class L10nZh extends L10n {
   String get shellSeatIsland => '内嵌网页';
 
   @override
-  String get shellSeatWeb => '网页版打开';
+  String get shellSeatWeb => '暂不支持';
 
   @override
   String get shellPlugins => '插件';
@@ -24377,7 +24332,7 @@ class L10nZh extends L10n {
 
   @override
   String viewUiDialectWebOnly(String kind) {
-    return '$kind · 在网页版查看';
+    return '$kind · 暂不支持';
   }
 
   @override
@@ -24411,10 +24366,10 @@ class L10nZh extends L10n {
   String get viewUiDialectKindOther => '这部分';
 
   @override
-  String get viewUiDialectInvalid => '这块内容在网页版查看';
+  String get viewUiDialectInvalid => '这块内容暂不支持';
 
   @override
-  String get viewUiDialectNote => '在网页版查看';
+  String get viewUiDialectNote => '暂不支持';
 
   @override
   String get voiceSettingsTitle => '语音';

@@ -38,9 +38,9 @@ Over DSH Remote, plugins can only be turned on or off. To install or uninstall, 
 
 Enable the plugin, then open **Settings** in its details. When the plugin supplies supported settings, the app shows switches, choices, text or number inputs directly, without switching to the web. Some changes take effect at once. If the page shows **Unsaved**, tap **Save** at the bottom and wait for **Applied**. For fields that need typing, tap **Done** in the sheet, then check whether the page still shows **Unsaved**. These changes apply to the plugin on the current host.
 
-Some items can only be edited on the web. Their rows say **Edit this item on the web**; tap one to open the plugin's web settings. Other supported items on the same page remain editable in the app. If the plugin has no usable native settings page, follow its entry to the web interface.
+Some items cannot be edited in the app; other supported items remain editable.
 
-Locked settings, read-only hosts and disconnected hosts can't be edited. If a save fails, check the reason shown on the page and try again. If DSH Web can't be opened over DSH Remote, make the change in DSH Web on that computer.
+Locked settings, read-only hosts and disconnected hosts can't be edited. If a save fails, check the reason shown on the page and try again. For web-only features, use DSH Web on the host computer.
 
 ## Native UI
 

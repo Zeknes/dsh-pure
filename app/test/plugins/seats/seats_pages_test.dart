@@ -22,7 +22,6 @@ import 'package:dsh_app/ui/plugins/seats/plugin_seat_page.dart';
 import 'package:dsh_app/ui/plugins/seats/session_plugins_tab.dart';
 import 'package:dsh_app/ui/session/session_detail_page.dart';
 import 'package:dsh_app/ui/settings/settings_screen.dart';
-import 'package:dsh_app/ui/web/web_target.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -242,12 +241,12 @@ void main() {
       );
       await _openProbeSheet(tester);
       final row = find.ancestor(of: find.text('设置'), matching: find.byType(InkWell)).first;
-      expect(find.descendant(of: row, matching: find.text('网页版')), findsOneWidget);
+      expect(find.descendant(of: row, matching: find.text('暂不支持在这里设置')), findsOneWidget);
       // On a host without the occupancy table the rest of its web part is one
       // more row under 「网页版界面」 (plugin-ui-v3 §3.5).
-      expect(find.byKey(const ValueKey('web-place-unknown')), findsOneWidget);
+      expect(find.byKey(const ValueKey('web-place-unknown')), findsNothing);
       await tester.tap(row);
-      expect(openedWeb.single.pluginItem, ['岛屿探针', 'Island probe', probe]);
+      expect(openedWeb, isEmpty);
     });
 
     testWidgets('with room for an island the row opens the plugin\'s own page', (tester) async {
@@ -262,7 +261,7 @@ void main() {
       );
       await _openProbeSheet(tester);
       final config = find.ancestor(of: find.text('设置'), matching: find.byType(InkWell)).first;
-      expect(find.descendant(of: config, matching: find.text('网页版')), findsNothing);
+      expect(find.descendant(of: config, matching: find.text('暂不支持在这里设置')), findsNothing);
       await tester.tap(find.text('设置'));
       await _settle(tester);
       expect(find.byType(PluginSeatPage), findsOneWidget);
@@ -311,7 +310,7 @@ void main() {
       expect(find.text('探针面板'), findsOneWidget);
       expect(find.text('桌宠面板'), findsOneWidget);
       await tester.tap(find.text('桌宠面板'));
-      expect(openedWeb.single, const DshWebTarget(sidebar: true));
+      expect(openedWeb, isEmpty);
       await tester.tap(find.text('探针面板'));
       await chat.pumpFrames(tester, 8);
       final page = tester.widget<PluginSeatPage>(find.byType(PluginSeatPage));
@@ -351,8 +350,7 @@ void main() {
       );
       expect(find.byType(FakeIsland), findsNothing);
       expect(find.text('探针面板'), findsOneWidget);
-      await tester.tap(find.text('在网页版打开'));
-      expect(openedWeb.single, const DshWebTarget(sidebar: true));
+      expect(find.text('在网页版打开'), findsNothing);
     });
 
     testWidgets('inventory changes keep the chosen tab and its fallback in sync', (tester) async {
@@ -424,9 +422,8 @@ void main() {
       await chat.pumpFrames(tester, 2);
       // Named once, by the entry itself.
       expect(find.text('探针页签'), findsOneWidget);
-      expect(find.text('在网页版打开'), findsOneWidget);
-      await tester.tap(find.text('在网页版打开'));
-      expect(openedWeb.single, const DshWebTarget(sessionId: 's1'));
+      expect(find.text('在网页版打开'), findsNothing);
+      expect(find.text('在网页版打开'), findsNothing);
     });
 
     testWidgets('several plugin tabs are a list, each opening its page or DSH Web', (tester) async {
@@ -447,9 +444,9 @@ void main() {
       );
       expect(find.text('探针页签'), findsOneWidget);
       expect(find.text('桌宠状态'), findsOneWidget);
-      expect(find.text('网页版'), findsOneWidget);
+      expect(find.text('暂不支持在这里设置'), findsOneWidget);
       await tester.tap(find.text('桌宠状态'));
-      expect(openedWeb.single, const DshWebTarget(sessionId: 's1'));
+      expect(openedWeb, isEmpty);
       await tester.tap(find.text('探针页签'));
       await chat.pumpFrames(tester, 8);
       expect(find.byType(PluginSeatPage), findsOneWidget);
@@ -470,11 +467,9 @@ void main() {
       await full.read(installedPluginsProvider.future);
       final section = full.read(featureSectionsProvider).singleWhere((s) => s.title == pluginFeatureSection);
       final base = featureSections.singleWhere((s) => s.title == pluginFeatureSection);
-      expect(section.items.length, base.items.length + 2);
+      expect(section.items.length, base.items.length + 1);
       final probePanel = section.items[base.items.length];
-      final petPanel = section.items.last;
-      expect((probePanel.title, probePanel.summary, probePanel.hasNative), ('探针面板', '岛屿探针', true));
-      expect((petPanel.title, petPanel.webOnly, petPanel.web), ('桌宠面板', true, const DshWebTarget(sidebar: true)));
+      expect((probePanel.title, probePanel.summary, probePanel.native != null), ('探针面板', '岛屿探针', true));
     });
 
     testWidgets('a panel with an island opens its page; the other opens DSH Web', (tester) async {
@@ -483,12 +478,10 @@ void main() {
         const AllFeaturesPage(),
         seats: [
           ...seatOverrides(inventory: seatInventory(occupancy: fullOccupancy)),
-          dshWebOpenerProvider.overrideWithValue((context, ref, target) => openedWeb.add(target)),
         ],
       );
-      await _reveal(tester, find.text('桌宠面板'));
-      await tester.tap(find.text('桌宠面板'));
-      expect(openedWeb.single, const DshWebTarget(sidebar: true));
+      expect(find.text('桌宠面板'), findsNothing);
+      await _reveal(tester, find.text('探针面板'));
       await tester.tap(find.text('探针面板'));
       await _settle(tester);
       expect(find.byType(PluginSeatPage), findsOneWidget);
@@ -506,7 +499,7 @@ void main() {
       );
       await _reveal(tester, find.text('桌宠提醒'));
       await tester.tap(find.text('桌宠提醒'));
-      expect(openedWeb.single, const DshWebTarget(settings: DshWebSettings.general));
+      expect(openedWeb, isEmpty);
       await tester.tap(find.text('岛屿探针'));
       await _settle(tester);
       expect(find.byType(PluginSeatPage), findsOneWidget);
@@ -540,7 +533,7 @@ void main() {
       await tester.tap(find.text('桌面时钟'));
       await _settle(tester);
       expect(tester.getSize(find.byType(CordisIslandSeat)).height, 0);
-      expect(find.text('在网页版打开'), findsOneWidget);
+      expect(find.text('在网页版打开'), findsNothing);
     });
 
     testWidgets('only the plugin\'s own region: none for another plugin', (tester) async {

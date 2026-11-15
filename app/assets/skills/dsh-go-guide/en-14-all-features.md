@@ -1,6 +1,6 @@
 # All features
 
-Everything from DSH Web is on the phone too: open **All features** from the round button at the bottom of the chat list, or type `/features` in a chat.
+Find native features on the phone: open **All features** from the round button at the bottom of the chat list, or type `/features` in a chat.
 
 <!-- nav: chatChats,hubSettingsAllFeatures -->
 `Chats › All features`

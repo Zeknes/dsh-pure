@@ -113,7 +113,7 @@ typedef IslandSeatBuilder = Widget Function(
   WidgetBuilder fallback,
 );
 
-/// Draws one "open in DSH Web" entry.
+/// Draws one "unavailable" entry.
 typedef WebLinkSeatBuilder = Widget Function(BuildContext context, SeatContext seat, SeatItem item);
 
 /// How seats draw what is not native. Unset parts draw nothing: an island

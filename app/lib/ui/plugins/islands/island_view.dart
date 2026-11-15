@@ -44,7 +44,7 @@ abstract final class IslandPanelMetrics {
 ///   whatever is underneath.
 ///
 /// Hidden behind a skeleton until the slot is on screen; [fallback] (the
-/// seat's "open in DSH Web" row) when it can't be: no recipe, no room, no
+/// seat's "unavailable" row) when it can't be: no recipe, no room, no
 /// `ready` in time, the slot missing or empty.
 class IslandView extends ConsumerStatefulWidget {
   const IslandView({

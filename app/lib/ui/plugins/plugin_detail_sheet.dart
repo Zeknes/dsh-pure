@@ -28,7 +28,6 @@ import 'plugin_actions.dart';
 import 'plugin_load_status.dart';
 import 'plugin_widgets.dart';
 import 'seats/plugin_seam_controls.dart';
-import 'seats/plugin_web_places.dart';
 
 /// Market entry detail and the install confirmation: what it is, where it
 /// comes from, the trust warning, live progress and the one primary action.
@@ -570,7 +569,6 @@ class BundleSheet extends ConsumerWidget {
                   NativePluginPanels(package: package),
                 ],
               if (!gone) PluginSeamControls(package: bundle.name),
-              if (!gone) PluginWebPlacesSection(package: bundle.name, pluginNames: [...?bundle.meta?.title?.all]),
               if (job != null && job.isActive) ...[
                 const SizedBox(height: 16),
                 PluginInstallProgress(

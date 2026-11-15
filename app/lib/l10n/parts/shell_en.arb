@@ -147,7 +147,7 @@
   "shellEarlier": "Earlier",
   "shellSeatNative": "Native",
   "shellSeatIsland": "Embedded Web",
-  "shellSeatWeb": "Open in DSH Web",
+  "shellSeatWeb": "Not supported",
   "shellPlugins": "Plugins",
   "shellHeaderActions": "Header buttons",
   "shellAllHidden": "All hidden",

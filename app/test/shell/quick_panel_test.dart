@@ -23,7 +23,6 @@ import 'package:dsh_app/ui/settings/settings_screen.dart';
 import 'package:dsh_app/ui/shell/home_shell.dart';
 import 'package:dsh_app/ui/shell/quick_panel.dart';
 import 'package:dsh_app/ui/shell/sessions_drawer.dart';
-import 'package:dsh_app/ui/web/local_web_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -493,7 +492,6 @@ void main() {
       expect(find.byTooltip('本机引擎'), findsOneWidget);
       expect(find.byTooltip('设置'), findsOneWidget);
       for (final other in [
-        DrawerDestination.web,
         DrawerDestination.remote,
         DrawerDestination.settingsSearch,
         DrawerDestination.features,
@@ -503,7 +501,6 @@ void main() {
     });
 
     final pages = <DrawerDestination, Type>{
-      DrawerDestination.web: LocalWebScreen,
       DrawerDestination.remote: RemoteScreen,
       DrawerDestination.plugins: PluginsScreen,
       DrawerDestination.engine: EngineScreen,
@@ -547,7 +544,7 @@ void main() {
           )
           .map((w) => (w.key! as ValueKey<String>).value)
           .toList();
-      expect(rows, ['quick-panel-settings', 'quick-panel-web']);
+      expect(rows, ['quick-panel-settings']);
     });
   });
 

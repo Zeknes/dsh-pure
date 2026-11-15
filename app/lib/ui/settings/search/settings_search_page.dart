@@ -23,7 +23,6 @@ import '../../common/ask_ai.dart';
 import '../../common/capsule_chip.dart';
 import '../../common/list_page_row.dart';
 import '../../common/search_capsule.dart';
-import '../../features/all_features_page.dart' show dshWebOpenerProvider;
 import '../../features/feature_catalog.dart';
 import '../../engine_settings/engine_settings_page.dart' show isPluginForm, namespaceTitle;
 import '../../features/feature_widgets.dart' show FeatureMessage;
@@ -146,8 +145,7 @@ class _SettingsSearchPageState extends ConsumerState<SettingsSearchPage> {
       unawaited(Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page(session))));
     } else if (item.action case final action?) {
       unawaited(Future.sync(() => action(context, ref, session)));
-    } else if (item.webFor(session) case final target?) {
-      ref.read(dshWebOpenerProvider)(context, ref, target);
+
     }
   }
 
@@ -299,7 +297,7 @@ class _SpotResult extends ConsumerWidget {
   }
 }
 
-/// No settings matched: the question, as typed, for 问 AI (not in 网页模式,
+/// No settings matched: the question, as typed, for 问 AI (
 /// where there is no native chat to take it).
 class _NoResults extends ConsumerWidget {
   const _NoResults({required this.query});

@@ -28,8 +28,6 @@ import '../settings/settings_widgets.dart' show SettingsMetrics;
 import '../shell/page_frame.dart';
 import '../theme/app_icons.dart';
 import '../theme/theme.dart';
-import '../web/dsh_web_launcher.dart';
-import '../web/web_target.dart';
 import 'field_row.dart';
 import 'field_sheets.dart';
 import 'schema_fields.dart';
@@ -702,22 +700,15 @@ List<SchemaFormSection> schemaSections(
   return sections;
 }
 
-/// One unsupported item still leaves the rest of the native form available:
-/// its title over 「在网页版编辑此项」 (wrapping, never cut), the
-/// open-external glyph where a chevron would be, the row opening the item on
-/// the web.
+/// An unsupported item leaves the rest of the native form available.
 class SchemaUnsupportedField extends ConsumerWidget {
   const SchemaUnsupportedField({super.key, required this.title, required this.ns});
   final String title;
   final String ns;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => EngineFieldRow(
-    title: title,
-    subtitle: context.l10n.engineFieldEditOnWeb,
-    opensExternally: true,
-    onTap: () => openDshWeb(context, ref, target: DshWebTarget(pluginItem: [ns])),
-  );
+  Widget build(BuildContext context, WidgetRef ref) =>
+      EngineFieldRow(title: title, subtitle: context.l10n.pluginConfigUnsupported);
 }
 
 /// Whether a namespace has anything a form would show. A web fallback row

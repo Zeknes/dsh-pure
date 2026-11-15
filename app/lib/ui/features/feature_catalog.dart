@@ -1,8 +1,3 @@
-// Every user-facing surface of the official DSH Web client (0.2.1-rc.2) and
-// where it lives in the app: a native page, the official page inside the app
-// (DSH Web with a deep link), or both. The parity table behind it is
-// `docs/official-parity.md`.
-
 import 'dart:async';
 
 import 'package:dsh_client/dsh_client.dart' show PluginBundle;
@@ -32,7 +27,6 @@ import '../share_code/profile_share_sheet.dart';
 import '../shell/session_search_page.dart';
 import '../terminal/terminal_page.dart';
 import '../theme/app_icons.dart';
-import '../web/web_target.dart';
 import '../workspace/workspaces_page.dart';
 import 'feature_widgets.dart' show openSessionInChat;
 import 'jobs_page.dart';
@@ -57,12 +51,10 @@ class FeatureItem {
     this.tile,
     this.native,
     this.action,
-    this.web,
     this.needsSession = false,
-    this.webInSession = false,
   }) : _localizedTitle = null,
        _localizedSummary = null,
-       assert(native != null || action != null || web != null);
+       assert(native != null || action != null);
 
   const FeatureItem.localized({
     required this.id,
@@ -72,14 +64,12 @@ class FeatureItem {
     this.tile,
     this.native,
     this.action,
-    this.web,
     this.needsSession = false,
-    this.webInSession = false,
   }) : _title = '',
        _summary = '',
        _localizedTitle = title,
        _localizedSummary = summary,
-       assert(native != null || action != null || web != null);
+       assert(native != null || action != null);
 
   final String id;
   final String _title;
@@ -105,22 +95,8 @@ class FeatureItem {
   /// The app's own way in when it isn't a page (a sheet, the composer).
   final FeatureAction? action;
 
-  /// The official page inside the app.
-  final DshWebTarget? web;
-
   /// Only makes sense for an open conversation (disabled without one).
   final bool needsSession;
-
-  /// The web page belongs to the open conversation: open it there first.
-  final bool webInSession;
-
-  /// The app has its own page or flow for it.
-  bool get hasNative => native != null || action != null;
-
-  bool get webOnly => !hasNative;
-
-  /// [web] aimed at [sessionId] when it belongs to a conversation.
-  DshWebTarget? webFor(String? sessionId) => webInSession && sessionId != null ? web?.inSession(sessionId) : web;
 }
 
 class FeatureSection {
@@ -310,8 +286,6 @@ final featureSections = <FeatureSection>[
       summary: (l10n) => l10n.catalogVoiceInputSummary,
       icon: AppIcons.voice,
       action: _backToChat,
-      // l10n:keep DSH Web plugin title aliases used for deep-link matching
-      web: const DshWebTarget(pluginItem: ['语音输入', 'Voice input']),
     ),
   ]),
   FeatureSection.localized((l10n) => l10n.catalogCommunitySharingSection, [
@@ -350,13 +324,6 @@ final featureSections = <FeatureSection>[
       icon: AppIcons.workspace,
       tile: FeatureKind.workspace,
       native: (_) => const WorkspacesPage(),
-    ),
-    FeatureItem.localized(
-      id: 'web',
-      title: (l10n) => l10n.commonWeb,
-      summary: (l10n) => l10n.catalogWebSummary,
-      icon: AppIcons.webApp,
-      web: const DshWebTarget(),
     ),
   ]),
   // The same pages as in 设置 (one home, one name), for people who look
@@ -408,13 +375,14 @@ final featureSectionsProvider = Provider.autoDispose<List<FeatureSection>>((ref)
   final inventory = ref.watch(seatInventoryProvider);
   final panels = [
     for (final item in items)
-      pluginPanelFeature(
-        item,
-        bundles: bundles,
-        inventory: inventory,
-        // A native panel's plugin may have declared a title of its own.
-        owner: item.mode == SeatMode.native ? ref.watch(nativePluginTitleProvider(item.occupant.package)) : null,
-      ),
+      if (item.mode != SeatMode.webLink)
+        pluginPanelFeature(
+          item,
+          bundles: bundles,
+          inventory: inventory,
+          // A native panel's plugin may have declared a title of its own.
+          owner: item.mode == SeatMode.native ? ref.watch(nativePluginTitleProvider(item.occupant.package)) : null,
+        ),
   ];
   return [
     for (final section in featureSections)
@@ -429,8 +397,7 @@ final featureSectionsProvider = Provider.autoDispose<List<FeatureSection>>((ref)
   ];
 });
 
-/// One plugin panel as an entry: its native or island page, or DSH Web (the
-/// card then says 「网页版」) when neither can come up. [owner] is the
+/// One native or island plugin panel. [owner] is the
 /// plugin's name for people (its declared title); a package name is never
 /// shown: then the card just says 「插件面板」.
 FeatureItem pluginPanelFeature(SeatItem item, {List<PluginBundle>? bundles, SeatInventory? inventory, String? owner}) {
@@ -447,7 +414,6 @@ FeatureItem pluginPanelFeature(SeatItem item, {List<PluginBundle>? bundles, Seat
     title: (_) => title,
     summary: (l10n) => named ? by : l10n.catalogPluginPanel,
     icon: nativeIcon(native?.icon) ?? AppIcons.plugin,
-    native: item.mode == SeatMode.webLink ? null : (_) => PluginSeatPage(title: title, request: page),
-    web: item.mode == SeatMode.webLink ? seatWebTarget(o, bundle: bundle) : null,
+    native: (_) => PluginSeatPage(title: title, request: page),
   );
 }

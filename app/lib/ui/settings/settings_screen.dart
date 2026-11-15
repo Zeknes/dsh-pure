@@ -17,7 +17,6 @@ import '../../state/phone_state.dart';
 import '../../state/plugins_state.dart';
 import '../../state/sessions_state.dart';
 import '../../state/settings_state.dart';
-import '../../state/ui_mode_state.dart';
 import '../../state/update_state.dart';
 import '../account/account_page.dart';
 import '../account/account_widgets.dart';
@@ -90,7 +89,6 @@ class SettingsScreen extends ConsumerWidget {
     final engine = EngineStatusView.of(runtime);
     final colors = DshColors.of(context);
     final notifier = ref.read(settingsProvider.notifier);
-    final uiMode = ref.watch(uiModeProvider.select((s) => s.mode));
     final host = ref.watch(activeHostProvider);
     Widget? text(String? value, {Color? color}) =>
         value == null ? null : Text(value, style: color == null ? null : TextStyle(color: color));
@@ -228,7 +226,6 @@ class SettingsScreen extends ConsumerWidget {
               icon: AppIcons.swap,
               tint: SettingsHues.general,
               spot: SettingsIndex.entry(SettingsPageId.interface),
-              value: Text(uiMode.label),
               onTap: () => _push(context, const InterfacePage()),
             ),
             const LanguageSettingsTile(tint: SettingsHues.general),

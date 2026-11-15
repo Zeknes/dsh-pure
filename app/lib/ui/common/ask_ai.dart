@@ -51,7 +51,7 @@ Future<void> askAiQuestion(BuildContext context, String question, {String guideP
 }
 
 /// ✦ in a page's top bar ([AppPage.actions]): the same 44 glass circle as
-/// the back key it mirrors. Nothing in 网页模式.
+/// the back key it mirrors.
 class AskAiButton extends ConsumerWidget {
   const AskAiButton(this.topic, {super.key});
 

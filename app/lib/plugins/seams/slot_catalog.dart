@@ -26,10 +26,10 @@ enum SeatPriority {
   p2,
 
   /// Message-level slots: one platform view per message would sink scrolling
-  /// and memory, so only an "open in DSH Web" entry.
+  /// and memory, so only an "unavailable" entry.
   message,
 
-  /// A slot §3 does not plan for: an "open in DSH Web" entry at most.
+  /// A slot §3 does not plan for: an "unavailable" entry at most.
   other,
 
   /// Replacement points of the app's own UI: no seat at all.
@@ -79,7 +79,7 @@ class SeatPolicy {
   /// Islands only when the person (or ui.json) asked for one.
   final bool optIn;
 
-  /// An "open in DSH Web" entry is a meaningful fallback.
+  /// An "unavailable" entry is a meaningful fallback.
   final bool webLink;
   final SlotInference inference;
 

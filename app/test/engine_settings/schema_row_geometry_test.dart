@@ -1,6 +1,6 @@
 // Measured layout of the schema form's rows at 320dp and large text: a
 // title keeps priority over its value, and the local fallback row says
-// 「在网页版编辑此项」 in full under its title with the open-external glyph
+// 「暂不支持在这里设置」 in full under its title with the open-external glyph
 // on the chevrons' column.
 
 import 'package:dsh_app/ui/common/overview_card.dart' show OverviewChevron;
@@ -121,7 +121,7 @@ void main() {
       'the local fallback row: the web line in full under the title, glyph on the chevrons\' column, $scale×',
       (tester) async {
         await pumpCatalogFields(tester, {'text': 'Voice input', 'callable': null}, scale: scale);
-        const web = '在网页版编辑此项';
+        const web = '暂不支持在这里设置';
         final fallback = rowOf('Callable');
         final line = find.descendant(of: fallback, matching: find.text(web));
         expect(line, findsOneWidget);
@@ -130,9 +130,7 @@ void main() {
         expect(tester.getRect(line).left, tester.getRect(find.text('Callable')).left, reason: 'under the title');
         expect(tester.getRect(line).top, greaterThan(tester.getRect(find.text('Callable')).bottom - 0.5));
         expect(find.descendant(of: fallback, matching: find.byType(OverviewChevron)), findsNothing);
-        final external = inkRight(tester, fallback, AppIcons.openExternal, ExternalGlyph.inkRight);
-        final chevron = inkRight(tester, rowOf('Text'), AppIcons.disclosure, DisclosureChevron.inkRight);
-        expect(external, closeTo(chevron, 0.5), reason: 'open-external ink at $external, chevron ink at $chevron');
+        expect(find.descendant(of: fallback, matching: find.byIcon(AppIcons.openExternal)), findsNothing);
         expect(
           tester.getRect(fallback).width,
           tester.getRect(rowOf('Text')).width,
@@ -140,7 +138,7 @@ void main() {
         );
         expect(
           tester.getSemantics(fallback),
-          isSemantics(isButton: true, isEnabled: true, hasTapAction: true, label: 'Callable\n$web'),
+          isSemantics(label: 'Callable\n$web'),
         );
         expect(tester.takeException(), isNull);
       },

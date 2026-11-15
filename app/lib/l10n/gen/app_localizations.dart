@@ -6011,13 +6011,13 @@ abstract class L10n {
   /// No description provided for @botsMobileApiRequired.
   ///
   /// In zh, this message translates to:
-  /// **'可先在网页版中使用'**
+  /// **'当前主机的插件暂不支持手机端，请更新插件后重试'**
   String get botsMobileApiRequired;
 
   /// No description provided for @botsMobileApiMissing.
   ///
   /// In zh, this message translates to:
-  /// **'手机端暂不支持，可先在网页版中使用'**
+  /// **'手机端暂不支持，请安装或更新插件'**
   String get botsMobileApiMissing;
 
   /// No description provided for @botsCreationConnectionChanged.
@@ -6547,12 +6547,6 @@ abstract class L10n {
   /// In zh, this message translates to:
   /// **'导出诊断包'**
   String get catalogDiagnosticsSummary;
-
-  /// No description provided for @catalogWebSummary.
-  ///
-  /// In zh, this message translates to:
-  /// **'DSH 官方界面'**
-  String get catalogWebSummary;
 
   /// No description provided for @catalogPluginPanel.
   ///
@@ -8863,12 +8857,6 @@ abstract class L10n {
   /// In zh, this message translates to:
   /// **'用其他应用打开'**
   String get commonOpenWith;
-
-  /// No description provided for @commonOpenInWeb.
-  ///
-  /// In zh, this message translates to:
-  /// **'在网页版打开'**
-  String get commonOpenInWeb;
 
   /// No description provided for @commonUntitledChat.
   ///
@@ -13136,12 +13124,6 @@ abstract class L10n {
   /// **'至少选一个档位'**
   String get engineModelNeedLevel;
 
-  /// No description provided for @engineFieldEditOnWeb.
-  ///
-  /// In zh, this message translates to:
-  /// **'在网页版编辑此项'**
-  String get engineFieldEditOnWeb;
-
   /// No description provided for @engineSettingsHostChanged.
   ///
   /// In zh, this message translates to:
@@ -15800,18 +15782,6 @@ abstract class L10n {
   /// **'思考与工具调用收成一行'**
   String get hubSettingsCollapseStepsHint;
 
-  /// No description provided for @hubSettingsWebPhoneLayout.
-  ///
-  /// In zh, this message translates to:
-  /// **'网页版手机布局'**
-  String get hubSettingsWebPhoneLayout;
-
-  /// No description provided for @hubSettingsWebPhoneLayoutHint.
-  ///
-  /// In zh, this message translates to:
-  /// **'为手机屏幕重排网页版'**
-  String get hubSettingsWebPhoneLayoutHint;
-
   /// No description provided for @hubSettingsEngineExtensions.
   ///
   /// In zh, this message translates to:
@@ -16279,18 +16249,6 @@ abstract class L10n {
   /// In zh, this message translates to:
   /// **'首页'**
   String get hubInterfaceHome;
-
-  /// No description provided for @hubInterfaceWebHint.
-  ///
-  /// In zh, this message translates to:
-  /// **'DSH 官方网页版'**
-  String get hubInterfaceWebHint;
-
-  /// No description provided for @hubInterfaceOpenWeb.
-  ///
-  /// In zh, this message translates to:
-  /// **'打开网页版'**
-  String get hubInterfaceOpenWeb;
 
   /// No description provided for @hubInterfacePhoneLayout.
   ///
@@ -22627,18 +22585,6 @@ abstract class L10n {
   /// In zh, this message translates to:
   /// **'没有匹配的设置'**
   String get pluginConfigNoMatch;
-
-  /// No description provided for @pluginConfigOpenWeb.
-  ///
-  /// In zh, this message translates to:
-  /// **'在网页版设置'**
-  String get pluginConfigOpenWeb;
-
-  /// No description provided for @pluginConfigOpenWebHint.
-  ///
-  /// In zh, this message translates to:
-  /// **'插件自带的设置页'**
-  String get pluginConfigOpenWebHint;
 
   /// No description provided for @pluginConfigResetAll.
   ///
@@ -29498,12 +29444,6 @@ abstract class L10n {
   /// **'预设,模式,工作方式'**
   String get searchKwAgentPresets;
 
-  /// No description provided for @searchKwUiMode.
-  ///
-  /// In zh, this message translates to:
-  /// **'原生,网页,网页模式,界面,切换界面'**
-  String get searchKwUiMode;
-
   /// No description provided for @searchKwLanguage.
   ///
   /// In zh, this message translates to:
@@ -29546,23 +29486,11 @@ abstract class L10n {
   /// **'收起,折叠,过程,步骤'**
   String get searchKwFoldTurns;
 
-  /// No description provided for @searchKwWebPhoneLayout.
-  ///
-  /// In zh, this message translates to:
-  /// **'网页版手机布局,布局'**
-  String get searchKwWebPhoneLayout;
-
   /// No description provided for @searchKwShareConfig.
   ///
   /// In zh, this message translates to:
   /// **'分享,导出配置,分享码,配置'**
   String get searchKwShareConfig;
-
-  /// No description provided for @searchKwOpenWeb.
-  ///
-  /// In zh, this message translates to:
-  /// **'网页版,网页,浏览器,官方网页版'**
-  String get searchKwOpenWeb;
 
   /// No description provided for @searchKwSafeMode.
   ///
@@ -29941,24 +29869,6 @@ abstract class L10n {
   /// In zh, this message translates to:
   /// **'确认方式,手机操控,免确认'**
   String get searchKwPhoneConfirmEntry;
-
-  /// No description provided for @searchKwWebCodingView.
-  ///
-  /// In zh, this message translates to:
-  /// **'代码视图,工作视图,网页版'**
-  String get searchKwWebCodingView;
-
-  /// No description provided for @searchKwWebCollapse.
-  ///
-  /// In zh, this message translates to:
-  /// **'工作步骤,收起,折叠,网页版'**
-  String get searchKwWebCollapse;
-
-  /// No description provided for @searchKwWebBusySend.
-  ///
-  /// In zh, this message translates to:
-  /// **'发送,排队,插话,AI 工作时'**
-  String get searchKwWebBusySend;
 
   /// No description provided for @searchKwPluginsMarket.
   ///
@@ -31229,7 +31139,7 @@ abstract class L10n {
   /// No description provided for @shellSeatWeb.
   ///
   /// In zh, this message translates to:
-  /// **'网页版打开'**
+  /// **'暂不支持'**
   String get shellSeatWeb;
 
   /// No description provided for @shellPlugins.
@@ -44285,7 +44195,7 @@ abstract class L10n {
   /// No description provided for @viewUiDialectWebOnly.
   ///
   /// In zh, this message translates to:
-  /// **'{kind} · 在网页版查看'**
+  /// **'{kind} · 暂不支持'**
   String viewUiDialectWebOnly(String kind);
 
   /// No description provided for @viewUiDialectKindInteractive.
@@ -44351,13 +44261,13 @@ abstract class L10n {
   /// No description provided for @viewUiDialectInvalid.
   ///
   /// In zh, this message translates to:
-  /// **'这块内容在网页版查看'**
+  /// **'这块内容暂不支持'**
   String get viewUiDialectInvalid;
 
   /// No description provided for @viewUiDialectNote.
   ///
   /// In zh, this message translates to:
-  /// **'在网页版查看'**
+  /// **'暂不支持'**
   String get viewUiDialectNote;
 
   /// No description provided for @voiceSettingsTitle.

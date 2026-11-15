@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 
 /// Why an island gave up (`empty` / `error` messages, or the app's own
-/// timers): every one of them falls back to "open in DSH Web".
+/// timers): every one of them falls back to "unavailable".
 enum IslandFailure {
   /// The official client didn't come up.
   boot,

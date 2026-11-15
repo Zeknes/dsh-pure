@@ -155,9 +155,8 @@ void main() {
         final fallback = find.byType(SchemaUnsupportedField);
         final data = tester.getSemantics(fallback).getSemanticsData();
         expect(data.label, contains('Callable'));
-        expect(data.label, contains('在网页版编辑此项'));
-        expect(data.flagsCollection.isButton, isTrue);
-        expect(data.hasAction(ui.SemanticsAction.tap), isTrue);
+        expect(data.label, contains('暂不支持在这里设置'));
+        expect(data.hasAction(ui.SemanticsAction.tap), isFalse);
         expect(tester.getSize(fallback).height, greaterThanOrEqualTo(48));
         expect(fallback.hitTestable(), findsOneWidget);
         expectAllButtonsTappable();

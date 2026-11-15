@@ -18,7 +18,6 @@ import 'package:dsh_app/ui/remote/remote_screen.dart';
 import 'package:dsh_app/ui/settings/settings_screen.dart';
 import 'package:dsh_app/ui/shell/home_shell.dart';
 import 'package:dsh_app/ui/theme/theme.dart';
-import 'package:dsh_app/ui/web/local_web_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -183,17 +182,7 @@ void main() {
     ],
   );
 
-  // Web fallback while the engine is down.
-  goldenBoth(
-    'web_offline',
-    () => const LocalWebScreen(),
-    overrides: () => [
-      localRuntimeProvider.overrideWith(
-        () => FakeRuntime(const LocalRuntimeState(loaded: true, status: RuntimeStatus(phase: RuntimePhase.installed))),
-      ),
-      settingsProvider.overrideWith(() => FakeSettings(const AppSettings(loaded: true))),
-    ],
-  );
+
 }
 
 /// Stand-in for the chat screen behind the drawer: a few message shapes so the

@@ -40,7 +40,7 @@ Iterable<(SeatContext, SeatItem)> _items(WidgetRef ref, String slot) {
 }
 
 /// One plugin section as a hub row: its settings form, its island page, or
-/// 「网页版」 when it only opens there.
+/// an unavailable indication when neither is supported.
 class PluginSettingsTile extends ConsumerWidget {
   const PluginSettingsTile({super.key, required this.seat, required this.item, this.tint = 0});
 
@@ -87,8 +87,8 @@ class PluginSettingsTile extends ConsumerWidget {
       icon: AppIcons.plugin,
       tint: tint,
       title: title,
-      value: web ? Text(l10n.commonWeb) : null,
-      onTap: () => open(context),
+      value: web ? Text(l10n.pluginConfigUnsupported) : null,
+      onTap: web ? null : () => open(context),
     );
   }
 }

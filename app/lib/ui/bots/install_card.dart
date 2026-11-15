@@ -13,17 +13,9 @@ import '../plugins/plugin_actions.dart';
 import '../theme/app_icons.dart';
 import '../theme/theme.dart';
 import '../common/brief_notice.dart';
-import '../web/dsh_web_launcher.dart';
-import '../web/web_target.dart';
 
 /// The command that adds DS Bot to a `dsh web` profile on a computer.
 const dsBotInstallCommand = 'dsh plugin --profile web add ds-bot';
-
-/// Uses the existing authenticated DSH Web launcher. Tests replace only this edge.
-final dsBotWebOpenerProvider = Provider<void Function(BuildContext context, WidgetRef ref)>(
-  (ref) =>
-      (context, ref) => openDshWeb(context, ref, target: const DshWebTarget(sidebar: true)),
-);
 
 class DsBotInstallCard extends ConsumerWidget {
   const DsBotInstallCard({super.key, required this.status});
@@ -58,13 +50,6 @@ class DsBotInstallCard extends ConsumerWidget {
       action: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          FilledButton.icon(
-            key: const ValueKey('dsbot-open-web'),
-            onPressed: () => ref.read(dsBotWebOpenerProvider)(context, ref),
-            icon: const Icon(AppIcons.webApp, size: 18),
-            label: Text(l10n.commonOpenInWeb),
-          ),
-          const SizedBox(height: 8),
           if (_update)
             TextButton(
               key: const ValueKey('dsbot-recheck-mobile'),

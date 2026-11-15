@@ -36,13 +36,8 @@ void main() {
     expect(item('search').native, isNull);
   });
 
-  test('只有引擎语音和网页版保留 web 入口', () {
-    final webIds = featureSections
-        .expand((section) => section.items)
-        .where((item) => item.web != null)
-        .map((item) => item.id)
-        .toSet();
-    expect(webIds, {'voice-input', 'web'});
+  test('没有内置 Web 入口', () {
+    expect(featureSections.expand((s) => s.items).map((i) => i.id), isNot(contains('web')));
   });
 
   testWidgets('DS Bot 徽标实时汇总未读，零隐藏，超过 99 封顶', (tester) async {

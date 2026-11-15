@@ -1051,7 +1051,7 @@
     }
   },
   "botsMobileUnsupportedTitle": "DS Bot 暂不支持手机端",
-  "botsMobileApiRequired": "可先在网页版中使用",
-  "botsMobileApiMissing": "手机端暂不支持，可先在网页版中使用",
+  "botsMobileApiRequired": "当前主机的插件暂不支持手机端，请更新插件后重试",
+  "botsMobileApiMissing": "手机端暂不支持，请安装或更新插件",
   "botsCreationConnectionChanged": "连接已变化，请重新打开创建页面后再操作。"
 }

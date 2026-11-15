@@ -8,7 +8,6 @@ import 'package:dsh_app/app.dart';
 import 'package:dsh_app/l10n/l10n.dart';
 import 'package:dsh_app/performance/performance_state.dart';
 import 'package:dsh_app/state/locale_state.dart';
-import 'package:dsh_app/state/ui_mode_state.dart';
 import 'package:dsh_app/ui/common/app_sheet.dart';
 import 'package:dsh_app/ui/common/display_image.dart';
 import 'package:dsh_app/ui/onboarding/runtime_choice.dart';
@@ -17,17 +16,13 @@ import 'package:dsh_app/ui/plugins/plugin_widgets.dart';
 import 'package:dsh_app/ui/settings/performance_page.dart';
 import 'package:dsh_app/ui/settings/settings_widgets.dart';
 import 'package:dsh_app/ui/theme/theme.dart';
-import 'package:dsh_app/ui/web/mode_home.dart';
-import 'package:dsh_app/ui/web/web_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
-import '../web/support/fake_webview.dart';
 import 'support.dart';
 
 class _Language extends AppLanguageController {
@@ -391,40 +386,6 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text(appL10n.commonContinue));
     expect(local, 1);
-  });
-
-  testWidgets('light native mode creates no WebView until the user selects web', (tester) async {
-    window(tester);
-    final platform = FakeWebViewPlatform();
-    final previous = WebViewPlatform.instance;
-    WebViewPlatform.instance = platform;
-    if (previous != null) addTearDown(() => WebViewPlatform.instance = previous);
-    SharedPreferences.setMockInitialValues({'performance.mode': 'light'});
-    final c = await mount(
-      tester,
-      ModeHome(
-        native: const Center(child: Text('native')),
-        web: (_) => WebViewPage(url: Uri.parse('http://127.0.0.1:41234'), title: 'web'),
-      ),
-    );
-    await tester.pumpAndSettle();
-    expect(platform.controllers, isEmpty);
-    await c.read(uiModeProvider.notifier).set(UiMode.web);
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 100));
-    expect(platform.controllers, hasLength(1));
-    for (var i = 0; i < 20 && platform.controller.loads.isEmpty; i++) {
-      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 10)));
-      await tester.pump();
-    }
-    expect(platform.controller.loads, hasLength(1));
-    platform.controller.finish();
-    await tester.pumpAndSettle();
-    await c.read(uiModeProvider.notifier).set(UiMode.native);
-    await tester.pumpAndSettle();
-    await tester.pump(const Duration(seconds: 30));
-    expect(platform.controllers, hasLength(1), reason: 'No hidden replacement/prewarm is created');
-    expect(tester.takeException(), isNull);
   });
 
   testWidgets('inline plugin avatars retain cover detail at their physical display size', (tester) async {

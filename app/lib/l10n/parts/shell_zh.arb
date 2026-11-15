@@ -317,7 +317,7 @@
   "shellEarlier": "更早",
   "shellSeatNative": "原生",
   "shellSeatIsland": "内嵌网页",
-  "shellSeatWeb": "网页版打开",
+  "shellSeatWeb": "暂不支持",
   "shellPlugins": "插件",
   "shellHeaderActions": "顶栏按钮",
   "shellAllHidden": "全部隐藏",

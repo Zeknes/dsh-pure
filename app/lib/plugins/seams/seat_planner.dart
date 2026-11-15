@@ -1,6 +1,6 @@
 // Native adapters and the seat planner (docs/design/plugin-seams.md §4):
 // each third-party occupant of a seat gets one presentation, native adapter
-// first, web island second, "open in DSH Web" last.
+// first, web island second, "unavailable" last.
 
 import 'package:dsh_client/dsh_client.dart' show ClientInventoryTier;
 import 'package:flutter/widgets.dart';
@@ -131,7 +131,7 @@ class SlotAdapterRegistry {
 
   /// Pure: drops official occupants and repeated cells, orders by `order`
   /// (reported order on ties), then per occupant: ui.json override →
-  /// native adapter → island → "open in DSH Web" → hidden. A slot the app
+  /// native adapter → island → "unavailable" → hidden. A slot the app
   /// never seats (a replacement point of its own UI) plans to nothing.
   List<SeatItem> plan(
     String slot,

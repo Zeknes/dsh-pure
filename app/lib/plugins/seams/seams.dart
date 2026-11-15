@@ -1,6 +1,6 @@
 // Plugin seams: where web plugins show up in the native UI
 // (docs/design/plugin-seams.md §2–§5). Native adapter first, web island
-// second, "open in DSH Web" last.
+// second, "unavailable" last.
 
 export 'adapters/cordis_adapter.dart' show CordisAdapter, CordisSeat;
 export 'adapters/dsh_ui_panel_adapter.dart' show DshUiPanelAdapter;

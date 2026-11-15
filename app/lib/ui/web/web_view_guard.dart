@@ -6,7 +6,7 @@
 // (lib/ui/plugins/islands/island_platform.dart,
 // android/.../islands/IslandsPlugin.kt) wraps a WebView's client so the loss is
 // reported instead; this attaches the app's own pages to it (the web page,
-// 网页模式's home, the chart preview).
+// the remote console, the chart preview).
 //
 // All WebViews of the app share one renderer: when it goes, every page shows
 // 「网页已关闭 · 重新打开」 and builds a new WebView on demand. The dead one is destroyed

@@ -1,7 +1,7 @@
 // Native mirror of the official Cordis panel (`dsh-client-ui-cordis`, the
 // badge at the bottom of DSH Web's sidebar): the Host's dynamic plugins,
 // grouped like the official panel (this conversation first). A row opens its
-// sheet; the plugin's own panel opens in DSH Web.
+// sheet and its available native plugin island.
 
 import 'dart:async';
 

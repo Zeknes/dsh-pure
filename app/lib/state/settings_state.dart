@@ -20,7 +20,6 @@ class AppSettings {
     this.autoApproveCommands = false,
     this.automaticDiagnostics = false,
     this.phoneStorage = false,
-    this.webPhoneLayout = true,
     this.chatSuggestions = true,
     this.hardwareEnterSends = false,
     this.chatTextScale = 1.0,
@@ -51,7 +50,6 @@ class AppSettings {
 
   /// Fit the embedded DSH Web to a phone (`assets/web/`). Off shows the
   /// official layout untouched, e.g. to check a plugin that restyles it.
-  final bool webPhoneLayout;
 
   /// Show the fixed suggestion cards on the native chat's start page.
   final bool chatSuggestions;
@@ -91,7 +89,6 @@ class AppSettings {
     bool? autoApproveCommands,
     bool? automaticDiagnostics,
     bool? phoneStorage,
-    bool? webPhoneLayout,
     bool? chatSuggestions,
     bool? hardwareEnterSends,
     double? chatTextScale,
@@ -107,7 +104,6 @@ class AppSettings {
     autoApproveCommands: autoApproveCommands ?? this.autoApproveCommands,
     automaticDiagnostics: automaticDiagnostics ?? this.automaticDiagnostics,
     phoneStorage: phoneStorage ?? this.phoneStorage,
-    webPhoneLayout: webPhoneLayout ?? this.webPhoneLayout,
     chatSuggestions: chatSuggestions ?? this.chatSuggestions,
     hardwareEnterSends: hardwareEnterSends ?? this.hardwareEnterSends,
     chatTextScale: chatTextScale ?? this.chatTextScale,
@@ -133,7 +129,6 @@ class SettingsController extends Notifier<AppSettings> {
   static const _autoApproveKey = 'auto_approve_commands';
   static const _automaticDiagnosticsKey = 'automatic_diagnostics';
   static const _phoneStorageKey = 'phone_storage';
-  static const _webPhoneLayoutKey = 'web_phone_layout';
   static const _chatSuggestionsKey = 'chat_suggestions';
   static const _hardwareEnterKey = 'hardware_enter_sends';
   static const _chatTextScaleKey = 'chat_text_scale';
@@ -181,7 +176,6 @@ class SettingsController extends Notifier<AppSettings> {
       autoApproveCommands: prefs.getBool(_autoApproveKey) ?? true,
       automaticDiagnostics: prefs.getBool(_automaticDiagnosticsKey) ?? false,
       phoneStorage: prefs.getBool(_phoneStorageKey) ?? false,
-      webPhoneLayout: prefs.getBool(_webPhoneLayoutKey) ?? true,
       chatSuggestions: prefs.getBool(_chatSuggestionsKey) ?? true,
       hardwareEnterSends: prefs.getBool(_hardwareEnterKey) ?? false,
       chatTextScale: _knownScale(prefs.getDouble(_chatTextScaleKey)),
@@ -273,12 +267,6 @@ class SettingsController extends Notifier<AppSettings> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_visualRepliesKey, value);
     state = state.copyWith(visualReplies: value);
-  }
-
-  Future<void> setWebPhoneLayout(bool value) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_webPhoneLayoutKey, value);
-    state = state.copyWith(webPhoneLayout: value);
   }
 
   Future<void> setHardwareEnterSends(bool value) async {

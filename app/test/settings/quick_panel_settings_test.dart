@@ -107,7 +107,6 @@ void main() {
       DrawerDestination.plugins,
       DrawerDestination.engine,
       DrawerDestination.settings,
-      DrawerDestination.web,
       DrawerDestination.remote,
       DrawerDestination.settingsSearch,
       DrawerDestination.features,
@@ -151,7 +150,7 @@ void main() {
     expect(await _stored(), ['settings', 'plugins', 'engine']);
 
     // An unticked row moved up, then ticked, takes the place it was put in.
-    await _drag(tester, DrawerDestination.features, -5);
+    await _drag(tester, DrawerDestination.features, -4);
     expect(_rows(tester).take(3), [DrawerDestination.settings, DrawerDestination.features, DrawerDestination.plugins]);
     expect(await _stored(), ['settings', 'plugins', 'engine']);
     await tester.tap(_sheetRow(DrawerDestination.features));
@@ -175,9 +174,9 @@ void main() {
     expect(find.descendant(of: find.byKey(_itemsRow), matching: find.text('没有选择，左滑不会打开')), findsOneWidget);
 
     await _openSheet(tester);
-    await tester.tap(_sheetRow(DrawerDestination.web));
+    await tester.tap(_sheetRow(DrawerDestination.remote));
     await _settle(tester);
-    expect(await _stored(), ['web']);
+    expect(await _stored(), ['remote']);
     expect(_container(tester).read(quickPanelProvider).available, isTrue);
   });
 
@@ -219,7 +218,7 @@ void main() {
       SharedPreferences.setMockInitialValues({
         QuickPanelController.itemsKey: ['features', 'gone', 'web', 'features', ''],
       });
-      expect((await load(container())).items, [DrawerDestination.features, DrawerDestination.web]);
+      expect((await load(container())).items, [DrawerDestination.features]);
     });
 
     test('nothing left is nothing, not the defaults: the person chose those', () async {
@@ -232,19 +231,18 @@ void main() {
     test('a change made while the stored values load is not undone by them', () async {
       SharedPreferences.setMockInitialValues({
         QuickPanelController.swipeKey: true,
-        QuickPanelController.itemsKey: ['web'],
+        QuickPanelController.itemsKey: ['remote'],
       });
       final c = container();
       c.read(quickPanelProvider);
       await c.read(quickPanelProvider.notifier).setSwipe(false);
       expect(c.read(quickPanelProvider).swipe, isFalse);
-      expect(c.read(quickPanelProvider).items, [DrawerDestination.web]);
+      expect(c.read(quickPanelProvider).items, [DrawerDestination.remote]);
     });
   });
 
   test('every destination has a stable id and they stay what storage holds', () {
     expect(DrawerDestination.values.map((d) => d.name), [
-      'web',
       'remote',
       'plugins',
       'engine',

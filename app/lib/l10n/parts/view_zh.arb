@@ -1364,7 +1364,7 @@
     }
   },
   "viewModelThinkingXhigh": "超高",
-  "viewUiDialectWebOnly": "{kind} · 在网页版查看",
+  "viewUiDialectWebOnly": "{kind} · 暂不支持",
   "@viewUiDialectWebOnly": {
     "placeholders": {
       "kind": {
@@ -1382,6 +1382,6 @@
   "viewUiDialectKindFiles": "文件树",
   "viewUiDialectKindMap": "地图",
   "viewUiDialectKindOther": "这部分",
-  "viewUiDialectInvalid": "这块内容在网页版查看",
-  "viewUiDialectNote": "在网页版查看"
+  "viewUiDialectInvalid": "这块内容暂不支持",
+  "viewUiDialectNote": "暂不支持"
 }

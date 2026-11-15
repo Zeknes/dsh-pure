@@ -111,15 +111,15 @@ Future<void> pumpCatalogScene(
   );
   if (scene.plugin) {
     expect(find.byWidgetPredicate((widget) => widget.runtimeType.toString() == 'SchemaFieldTile'), findsWidgets);
-    expect(find.text('在网页版编辑此项'), findsNothing);
+    expect(find.text('暂不支持在这里设置'), findsNothing);
   } else if (scene.kind == 'hidden') {
     expect(find.byKey(ValueKey('catalog\u0000${scene.name}')), findsNothing);
     expect(find.byType(Switch), findsOneWidget);
   } else if (scene.kind == 'readOnly') {
-    expect(find.text('在网页版编辑此项'), findsOneWidget);
+    expect(find.text('暂不支持在这里设置'), findsOneWidget);
     expect(find.byType(Switch), findsOneWidget, reason: 'unsupported item cannot replace the whole page');
   } else {
-    expect(find.text('在网页版编辑此项'), findsNothing);
+    expect(find.text('暂不支持在这里设置'), findsNothing);
   }
   if (scene.open) {
     await tester.tap(find.byKey(ValueKey('catalog\u0000${scene.name}')));

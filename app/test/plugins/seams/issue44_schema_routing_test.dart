@@ -182,7 +182,8 @@ void main() {
     expect(find.byKey(fakeWebViewKey), findsOneWidget);
     page.fail();
     await settle(tester);
-    expect(find.text('在网页版打开'), findsOneWidget);
+    expect(find.text('在网页版打开'), findsNothing);
+    expect(find.text('暂不支持在这里设置'), findsOneWidget);
     expect(find.byType(IslandSkeleton), findsNothing);
     await tester.pumpWidget(const SizedBox());
     host.dispose();
@@ -192,7 +193,8 @@ void main() {
 
   testWidgets('a fallback-only namespace has a web entry when islands are unavailable', (tester) async {
     await open(tester, _fallbackOnly(), islands: false);
-    expect(find.text('在网页版打开'), findsOneWidget);
+    expect(find.text('在网页版打开'), findsNothing);
+    expect(find.text('暂不支持在这里设置'), findsOneWidget);
     expect(find.byType(SchemaConfigSeat), findsNothing);
     expect(web.controllers, isEmpty);
     await tester.pumpWidget(const SizedBox());

@@ -174,7 +174,7 @@ void main() {
             fixture.secondary,
             'third',
           ]);
-          expect(find.text('在网页版编辑此项'), findsNWidgets(2));
+          expect(find.text('暂不支持在这里设置'), findsNWidgets(2));
           for (final ns in [fixture.secondary, 'third']) {
             final row = find.byWidgetPredicate((w) => w is SchemaUnsupportedField && w.ns == ns);
             await tester.ensureVisible(row);
@@ -198,7 +198,7 @@ void main() {
       ],
     );
     expect(find.byType(SchemaUnsupportedField), findsOneWidget);
-    expect(find.text('在网页版编辑此项'), findsOneWidget);
+    expect(find.text('暂不支持在这里设置'), findsOneWidget);
     expect(find.byKey(const ValueKey('${fixture.primary}\u0000paragraph')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });

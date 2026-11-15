@@ -26,7 +26,6 @@ import 'package:dsh_app/ui/remote/remote_screen.dart';
 import 'package:dsh_app/ui/shell/home_shell.dart';
 import 'package:dsh_app/ui/shell/root_gate.dart';
 import 'package:dsh_app/ui/theme/app_icons.dart';
-import 'package:dsh_app/ui/web/local_web_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -605,26 +604,6 @@ void main() {
       await tester.tap(find.text('安装运行环境'));
       await _frames(tester, 8);
       expect(find.byType(LocalInstallPage), findsOneWidget);
-    });
-
-    testWidgets('web page: install instead of 启动', (tester) async {
-      usePhoneSurface(tester);
-      await tester.pumpWidget(
-        goldenApp(
-          home: const LocalWebScreen(),
-          brightness: Brightness.light,
-          overrides: [
-            localRuntimeProvider.overrideWith(
-              () => RecordingLocalRuntime(const LocalRuntimeState(loaded: true, status: missingStatus)),
-            ),
-            settingsProvider.overrideWith(() => FakeSettings(const AppSettings(loaded: true))),
-            footprint(roomyPhone),
-          ],
-        ),
-      );
-      await _frames(tester, 6);
-      expect(find.text('本机未安装运行环境'), findsOneWidget);
-      expect(find.widgetWithText(FilledButton, '安装运行环境'), findsOneWidget);
     });
 
     testWidgets('chat empty state: one pill, suggestions folded', (tester) async {

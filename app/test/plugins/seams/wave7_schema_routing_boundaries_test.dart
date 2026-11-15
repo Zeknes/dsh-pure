@@ -197,7 +197,7 @@ void main() {
           await tester.tap(find.text('设置'));
           await settle(tester);
         }
-        expect(find.text('在网页版编辑此项'), findsOneWidget);
+        expect(find.text('暂不支持在这里设置'), findsOneWidget);
         final field = find.byKey(ValueKey('$primary\u0000$role'));
         expect(field, findsOneWidget);
         await tester.ensureVisible(field);

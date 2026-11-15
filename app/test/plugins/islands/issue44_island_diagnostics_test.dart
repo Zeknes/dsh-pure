@@ -95,7 +95,6 @@ void main() {
           WebViewPage(
             url: Uri.parse('http://127.0.0.1:3080/?token=DO_NOT_LOG'),
             title: 'Plugin web settings',
-            dshWeb: true,
           ),
         ),
       );

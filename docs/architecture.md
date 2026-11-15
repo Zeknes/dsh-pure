@@ -74,14 +74,13 @@
 
 ```text
 main.dart → app.dart(DshApp/MaterialApp) → RootGate ─┬─ 引导未完成 OnboardingFlow
-                                                     └─ ModeHome ─┬─ HomeShell(原生界面)
-                                                                  └─ WebHome(官方 Web)
+                                                     └─ HomeShell(原生界面)
 HomeShell = [ChatScreen] + [SessionsDrawer 左] + [QuickPanel 右] + [SystemEntryHost/LinkHost（只分发，不绘制）]
 ```
 
 1. `lib/main.dart`：帧探针 → 载入语言与启动画面 → 注册许可与深链 → `runApp(ProviderScope(DshApp))`。唯一的 `ProviderScope` 在这里（全仓不锁定屏幕方向，平板由自适应布局处理）。
 2. `lib/app.dart`：唯一 MaterialApp；主题/语言/动效/启动层；主题按 accent/语言/blur/instant/fluid 缓存重建（`_themesFor` 的缓存键要同步扩）。
-3. `lib/ui/shell/root_gate.dart`：落地页判定（`initialOnboardingStep()` 是单一判据）：引导 / 首页 / Web 兜底；负责自动起引擎与诊断发布。
+3. `lib/ui/shell/root_gate.dart`：落地页判定（`initialOnboardingStep()` 是单一判据）：引导 / 原生首页；负责自动起引擎与诊断发布。
 4. `lib/ui/shell/home_shell.dart` + `sessions_drawer.dart` + `quick_panel.dart` + `adaptive/`：原生外壳（聊天 + 左抽屉 + 右快捷面板 + ≥840dp 自适应）。
 5. 二级页统一用 `ui/shell/page_frame.dart` 的 `AppPage`（浮动返回/大标题/滚动淡出）。
 
@@ -89,11 +88,11 @@ HomeShell = [ChatScreen] + [SessionsDrawer 左] + [QuickPanel 右] + [SystemEntr
 
 | 分组 | 目录 | 说明 |
 |---|---|---|
-| 外壳/路由 | `shell/` `modes/` | 主壳、抽屉、快捷面板、系统入口、自适应；深链集中表在 `app/lib/links/page_links.dart`（不在 ui/ 下） |
+| 外壳/路由 | `shell/` | 主壳、抽屉、快捷面板、系统入口、自适应；深链集中表在 `app/lib/links/page_links.dart`（不在 ui/ 下） |
 | 聊天 | `chat/`（123 文件） | 页 `chat_screen.dart`、列表 `chat_list.dart`、行模型 `chat_rows.dart`、`render/`（Markdown/流式修补/代码块/diff）、`widgets/`（消息/工具卡）、`dsh_ui/`（App 声明式视图卡）、`composer`、`voice/` |
 | 会话 | `sessions/` `session/` `replay/` | 列表、详情、导出/回放 |
 | 设置 | `settings/`（六组：AI/能力/外观/通用/主机/帮助） `engine_settings/` `access/` `safe_mode/` `providers/` `account/` | 设置 hub + 子页 + 搜索索引（`settings/index/spots.dart` 是标题与页面的单一来源） |
-| 引擎/连接 | `engine/` `remote/` `onboarding/` `web/` | 引擎状态与日志、远程主机、首次引导、官方 Web 兜底 |
+| 引擎/连接 | `engine/` `remote/` `onboarding/` `web/` | 引擎状态与日志、远程主机、首次引导、通用网页容器 |
 | 扩展 | `plugins/` `cordis/` `workshop/` | 原生插件详情/列表、Cordis、创意工坊 |
 | 内容功能 | `tavern/`（酒馆） `bots/` `companion/` `pets/` `star/` | 酒馆页、机器人、伙伴小屋、桌宠、Star 提示 |
 | 工具 | `phone/` `terminal/` `files/` `workspace/` `agents/` `notify/` `update/` | 手机操控/审批页、终端、文件、工作区、子代理、通知、更新 |
@@ -322,7 +321,7 @@ DSH npm 前缀（runtime/locks）→ rtbuild 按 series 应用 139 个补丁（p
 - proot 等可执行文件以 `lib*.so` 放 jniLibs，`useLegacyPackaging = true` 使其解压到 `nativeLibraryDir`。
 - 本地连接：原生层启动 `dsh web --host 127.0.0.1 --port 3080 --no-open`，从 stdout 解析 token；
   Dart 侧 `dsh_client` 用 token 换 cookie（`dsh-auth-<base64url(sha256(authority))>`，30 天，绑定 host:port），
-  之后 HTTP/WS 带 cookie、不带 Origin；WebView 兜底直接打开 `http://127.0.0.1:3080/?token=…`。
+  之后 HTTP/WS 带 cookie、不带 Origin；App 不内置 DSH Web 界面。
 
 ## 6. 关键约束速查
 

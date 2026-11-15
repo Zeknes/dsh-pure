@@ -56,7 +56,7 @@ final class GenuiMapping {
 
   final Map<String, Object?>? view;
 
-  /// JSON paths of the parts drawn as 「在网页版查看」 or dropped.
+  /// JSON paths of the parts drawn as 「暂不支持」 or dropped.
   final List<String> notes;
 }
 

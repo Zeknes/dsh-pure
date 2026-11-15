@@ -33,7 +33,7 @@ enum SpotCondition {
   /// Only while 手机操控 is on.
   phoneControlOn,
 
-  /// Not in 网页模式 (the native chat takes the question).
+  /// The native chat takes the question.
   nativeUi,
 
   /// Only when the host's engine has the setting.
@@ -745,12 +745,6 @@ abstract final class Spots {
   );
 
   // 界面.
-  static final uiMode = SettingSpot(
-    'ui-mode',
-    page: SettingsPageId.interface,
-    title: (l) => l.hubInterfaceHome,
-    keywords: (l) => l.searchKwUiMode,
-  );
   static final hardwareEnterSends = SettingSpot(
     'hardware-enter-sends',
     page: SettingsPageId.interface,
@@ -775,51 +769,6 @@ abstract final class Spots {
     title: (l) => l.hubTableTint,
     keywords: (l) => l.searchKwTableTint,
   );
-  static final webApp = SettingSpot(
-    'web-app',
-    page: SettingsPageId.interface,
-    title: (l) => l.commonWeb,
-    keywords: (l) => l.searchKwGeneral,
-    // 通用设置 (gone: its web app fields live here now).
-    link: 'general',
-  );
-  static final openWeb = SettingSpot(
-    'open-web',
-    page: SettingsPageId.interface,
-    title: (l) => l.hubInterfaceOpenWeb,
-    keywords: (l) => l.searchKwOpenWeb,
-  );
-  static final webPhoneLayout = SettingSpot(
-    'web-phone-layout',
-    page: SettingsPageId.interface,
-    title: (l) => l.hubInterfacePhoneLayout,
-    keywords: (l) => l.searchKwWebPhoneLayout,
-  );
-  static final webCodingView = SettingSpot(
-    'web-coding-view',
-    page: SettingsPageId.interface,
-    title: (l) => l.engineGeneralShowCodingView,
-    keywords: (l) => l.searchKwWebCodingView,
-    field: const SpotField(['ui-settings'], 'enabled'),
-    condition: SpotCondition.engineField,
-  );
-  static final webCollapse = SettingSpot(
-    'web-collapse',
-    page: SettingsPageId.interface,
-    title: (l) => l.engineGeneralCollapseTiming,
-    keywords: (l) => l.searchKwWebCollapse,
-    field: const SpotField(['ui-chat'], 'collapseTiming'),
-    condition: SpotCondition.engineField,
-  );
-  static final webBusySend = SettingSpot(
-    'web-busy-send',
-    page: SettingsPageId.interface,
-    title: (l) => l.engineGeneralBusySend,
-    keywords: (l) => l.searchKwWebBusySend,
-    field: const SpotField(['ui-conversation'], 'busyEnter'),
-    condition: SpotCondition.engineField,
-  );
-
   // 性能.
   static final refreshRate = SettingSpot(
     'refresh-rate',
@@ -1043,17 +992,10 @@ final _rows = <SettingSpot>[
   Spots.iconShortcut,
   Spots.launchScreen,
   Spots.wallpaper,
-  Spots.uiMode,
   Spots.hardwareEnterSends,
   Spots.chatSuggestions,
   Spots.quickPanel,
   Spots.tableTint,
-  Spots.webApp,
-  Spots.openWeb,
-  Spots.webPhoneLayout,
-  Spots.webCodingView,
-  Spots.webCollapse,
-  Spots.webBusySend,
   Spots.refreshRate,
   Spots.blur,
   Spots.animations,

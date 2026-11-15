@@ -3444,10 +3444,10 @@ class L10nEn extends L10n {
   String get botsMobileUnsupportedTitle => 'DS Bot isn\'t on mobile yet';
 
   @override
-  String get botsMobileApiRequired => 'Use it in DSH Web for now';
+  String get botsMobileApiRequired => 'This host’s plugin does not yet support mobile. Update the plugin and retry.';
 
   @override
-  String get botsMobileApiMissing => 'Not on mobile yet. Use it in DSH Web for now';
+  String get botsMobileApiMissing => 'Not supported on mobile. Install or update the plugin.';
 
   @override
   String get botsCreationConnectionChanged => 'The connection changed. Reopen this form to create on the current host.';
@@ -3712,9 +3712,6 @@ class L10nEn extends L10n {
 
   @override
   String get catalogDiagnosticsSummary => 'Export diagnostics bundle';
-
-  @override
-  String get catalogWebSummary => 'Official DSH interface';
 
   @override
   String get catalogPluginPanel => 'Plugin panel';
@@ -5116,9 +5113,6 @@ class L10nEn extends L10n {
 
   @override
   String get commonOpenWith => 'Open in another app';
-
-  @override
-  String get commonOpenInWeb => 'Open in DSH Web';
 
   @override
   String get commonUntitledChat => 'Untitled chat';
@@ -7477,9 +7471,6 @@ class L10nEn extends L10n {
   String get engineModelNeedLevel => 'Pick at least one level';
 
   @override
-  String get engineFieldEditOnWeb => 'Edit this item on the web';
-
-  @override
   String get engineSettingsHostChanged => 'The host changed. Reopen these settings to edit.';
 
   @override
@@ -9007,12 +8998,6 @@ class L10nEn extends L10n {
   String get hubSettingsCollapseStepsHint => 'Fold thinking and tool calls into one line';
 
   @override
-  String get hubSettingsWebPhoneLayout => 'Web phone layout';
-
-  @override
-  String get hubSettingsWebPhoneLayoutHint => 'Adapt DSH Web to phone screens';
-
-  @override
   String get hubSettingsEngineExtensions => 'Engine and extensions';
 
   @override
@@ -9317,12 +9302,6 @@ class L10nEn extends L10n {
 
   @override
   String get hubInterfaceHome => 'Home';
-
-  @override
-  String get hubInterfaceWebHint => 'DSH\'s own web app';
-
-  @override
-  String get hubInterfaceOpenWeb => 'Open the web app';
 
   @override
   String get hubInterfacePhoneLayout => 'Phone layout';
@@ -12941,12 +12920,6 @@ class L10nEn extends L10n {
 
   @override
   String get pluginConfigNoMatch => 'No matching settings';
-
-  @override
-  String get pluginConfigOpenWeb => 'Set up on the web';
-
-  @override
-  String get pluginConfigOpenWebHint => 'The plugin\'s own page';
 
   @override
   String get pluginConfigResetAll => 'Reset all to defaults';
@@ -16974,9 +16947,6 @@ class L10nEn extends L10n {
   String get searchKwAgentPresets => 'presets,mode,agent mode';
 
   @override
-  String get searchKwUiMode => 'native,web,web mode,interface';
-
-  @override
   String get searchKwLanguage => 'chinese,english,locale';
 
   @override
@@ -16998,13 +16968,7 @@ class L10nEn extends L10n {
   String get searchKwFoldTurns => 'collapse,fold,steps';
 
   @override
-  String get searchKwWebPhoneLayout => 'web phone layout,layout';
-
-  @override
   String get searchKwShareConfig => 'share,export,share code,config';
-
-  @override
-  String get searchKwOpenWeb => 'web,browser,web ui';
 
   @override
   String get searchKwSafeMode => 'safe mode,leave safe mode,troubleshoot';
@@ -17198,15 +17162,6 @@ class L10nEn extends L10n {
 
   @override
   String get searchKwPhoneConfirmEntry => 'confirmation,phone control,don\'t ask';
-
-  @override
-  String get searchKwWebCodingView => 'coding view,work view,web';
-
-  @override
-  String get searchKwWebCollapse => 'work steps,collapse,web';
-
-  @override
-  String get searchKwWebBusySend => 'send,queue,while AI works';
 
   @override
   String get searchKwPluginsMarket => 'plugin market,install plugins,marketplace';
@@ -17985,7 +17940,7 @@ class L10nEn extends L10n {
   String get shellSeatIsland => 'Embedded Web';
 
   @override
-  String get shellSeatWeb => 'Open in DSH Web';
+  String get shellSeatWeb => 'Not supported';
 
   @override
   String get shellPlugins => 'Plugins';
@@ -25707,7 +25662,7 @@ class L10nEn extends L10n {
 
   @override
   String viewUiDialectWebOnly(String kind) {
-    return '$kind · View in DSH Web';
+    return '$kind · Not supported';
   }
 
   @override
@@ -25741,10 +25696,10 @@ class L10nEn extends L10n {
   String get viewUiDialectKindOther => 'This part';
 
   @override
-  String get viewUiDialectInvalid => 'This block shows in DSH Web';
+  String get viewUiDialectInvalid => 'This content is not supported';
 
   @override
-  String get viewUiDialectNote => 'Shown in DSH Web';
+  String get viewUiDialectNote => 'Not supported';
 
   @override
   String get voiceSettingsTitle => 'Voice';

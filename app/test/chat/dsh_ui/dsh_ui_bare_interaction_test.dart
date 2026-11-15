@@ -80,7 +80,7 @@ void main() {
       final harness = await _mount(tester, _message(source, true));
       expect(find.byType(DshUiDialectCard), findsOneWidget);
       expect(find.byType(DshUiCard), findsNothing);
-      final fallback = find.descendant(of: find.byType(DshUiDialectCard), matching: find.textContaining('在网页版查看'));
+      final fallback = find.descendant(of: find.byType(DshUiDialectCard), matching: find.textContaining('暂不支持'));
       expect(fallback, findsOneWidget);
       await tester.tap(fallback);
       await pumpFrames(tester);

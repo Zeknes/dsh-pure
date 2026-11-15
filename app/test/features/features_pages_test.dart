@@ -20,7 +20,6 @@ import 'package:dsh_app/ui/features/schedules_page.dart';
 import 'package:dsh_app/ui/features/skills_page.dart';
 import 'package:dsh_app/ui/terminal/terminal_page.dart';
 import 'package:dsh_app/ui/theme/theme.dart';
-import 'package:dsh_app/ui/web/web_target.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -209,11 +208,10 @@ void main() {
 
   group('全部功能', () {
     testWidgets('native items push their page; web items deep-link', (tester) async {
-      final opened = <DshWebTarget>[];
       await _pump(
         tester,
         const AllFeaturesPage(),
-        overrides: [..._fixed(), dshWebOpenerProvider.overrideWithValue((context, ref, target) => opened.add(target))],
+        overrides: _fixed(),
       );
       // The overview card names the conversation the tiles act on.
       expect(find.text('当前打开的对话'), findsOneWidget);
@@ -237,20 +235,14 @@ void main() {
       final row = find.ancestor(of: find.text('自动化任务'), matching: find.byType(FeatureTileFor));
       expect(find.descendant(of: row, matching: find.byTooltip('在网页版打开')), findsNothing);
       expect(tester.widget<FeatureTileFor>(row).item.native!('s1'), isA<SchedulesPage>());
-      expect(opened, isEmpty);
 
       // Settings shortcuts open the same pages as 设置.
       await _reveal(tester, find.text('远程主机'));
       final remote = find.ancestor(of: find.text('远程主机'), matching: find.byType(FeatureTileFor));
       expect(tester.widget<FeatureTileFor>(remote).item.native!(null), isA<RemoteScreen>());
       expect(find.text('Agent 循环'), findsNothing, reason: 'settings live in 设置');
-      expect(opened, isEmpty);
 
-      // Web-only: 网页版 itself.
-      await _reveal(tester, find.text('网页版'));
-      await tester.tap(find.text('网页版'));
-      await pumpFrames(tester);
-      expect(opened.last, const DshWebTarget());
+      expect(find.text('网页版'), findsNothing);
     });
 
     testWidgets('settings shortcuts last, then all-settings spanning the grid', (tester) async {
@@ -304,13 +296,11 @@ void main() {
     });
 
     testWidgets('conversation items are disabled without a conversation', (tester) async {
-      final opened = <DshWebTarget>[];
       await _pump(
         tester,
         const AllFeaturesPage(),
         overrides: [
           ..._fixed(current: null),
-          dshWebOpenerProvider.overrideWithValue((context, ref, target) => opened.add(target)),
         ],
       );
       expect(find.text('还没打开对话'), findsOneWidget);
@@ -325,12 +315,7 @@ void main() {
       await tapItem('终端');
       await pumpFrames(tester);
       expect(find.byType(JobsPage), findsNothing);
-      expect(opened, isEmpty);
-      // Not bound to a conversation: still opens (the web home here).
-      await _reveal(tester, find.text('网页版'));
-      await tester.tap(find.text('网页版'));
-      await pumpFrames(tester);
-      expect(opened.single, const DshWebTarget());
+      expect(find.text('网页版'), findsNothing);
     });
   });
 

@@ -7,7 +7,6 @@ import 'package:dsh_app/state/bots_state.dart';
 import 'package:dsh_app/ui/bots/bot_chat_page.dart';
 import 'package:dsh_app/ui/bots/bot_details_page.dart';
 import 'package:dsh_app/ui/bots/bots_page.dart';
-import 'package:dsh_app/ui/bots/install_card.dart';
 import 'package:dsh_app/ui/bots/room_chat_page.dart';
 import 'package:dsh_app/ui/bots/room_details_page.dart';
 import 'package:dsh_client/dsh_client.dart';
@@ -54,13 +53,12 @@ void main() {
     testWidgets('official v0.2.3 $name explains capability and opens Web', (tester) async {
       final fake = FakeDsBotTransport();
       fake.handlers['hello'] = (_) => throw officialError;
-      var webOpens = 0;
       usePhoneView(tester);
       await tester.pumpWidget(
         goldenApp(
           home: page,
           brightness: Brightness.light,
-          overrides: [...dsBotOverrides(fake), dsBotWebOpenerProvider.overrideWithValue((_, _) => webOpens++)],
+          overrides: dsBotOverrides(fake),
         ),
       );
       await frames(tester);
@@ -70,9 +68,7 @@ void main() {
       expect(find.textContaining(RegExp(r'v\d+\.\d+')), findsNothing);
       expect(fake.feedOpens, 0);
       expect(fake.endpoints, ['hello']);
-      await tester.ensureVisible(find.byKey(const ValueKey('dsbot-open-web')));
-      await tester.tap(find.byKey(const ValueKey('dsbot-open-web')));
-      expect(webOpens, 1);
+      expect(find.byKey(const ValueKey('dsbot-open-web')), findsNothing);
       expect(tester.takeException(), isNull);
     });
   }
@@ -89,13 +85,12 @@ void main() {
         goldenApp(
           home: const BotsPage(),
           brightness: brightness,
-          overrides: [...dsBotOverrides(fake), dsBotWebOpenerProvider.overrideWithValue((_, _) {})],
+          overrides: dsBotOverrides(fake),
         ),
       );
       await frames(tester);
       expect(find.text(appL10n.botsMobileApiMissing), findsOneWidget);
-      await tester.ensureVisible(find.byKey(const ValueKey('dsbot-open-web')));
-      expect(tester.widget<FilledButton>(find.byKey(const ValueKey('dsbot-open-web'))).onPressed, isNotNull);
+      expect(find.byKey(const ValueKey('dsbot-open-web')), findsNothing);
       expect(tester.takeException(), isNull);
     });
   }
@@ -112,7 +107,6 @@ void main() {
         overrides: [
           ...(dsBotOverrides(fake)..removeAt(1)),
           dsBotApiFactoryProvider.overrideWithValue((_) => DsBotApi(opens++ == 0 ? fake : next)),
-          dsBotWebOpenerProvider.overrideWithValue((_, _) {}),
         ],
       ),
     );

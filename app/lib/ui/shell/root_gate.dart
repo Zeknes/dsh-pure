@@ -22,7 +22,7 @@ import '../onboarding/onboarding_flow.dart';
 import '../onboarding/setup_progress.dart';
 import '../remote/remote_screen.dart';
 import '../theme/theme.dart';
-import '../web/mode_home.dart';
+import 'home_shell.dart';
 import 'brand_mark.dart';
 
 /// Where a launch should start, given what is installed and configured.
@@ -88,7 +88,7 @@ bool runtimeStepAsks(RuntimeStatus status) =>
 class RootGate extends ConsumerStatefulWidget {
   const RootGate({super.key, this.home});
 
-  /// Stands in for [ModeHome] (tests).
+  /// Stands in for [HomeShell] (tests).
   @visibleForTesting
   final Widget? home;
 
@@ -363,7 +363,7 @@ class _RootGateState extends ConsumerState<RootGate> {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (mounted) _maybeAutoStart();
         });
-        child = widget.home ?? const ModeHome();
+        child = widget.home ?? const HomeShell();
       }
     }
     if (child is! _Splash && !_launchReady) {

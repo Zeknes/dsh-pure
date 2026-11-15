@@ -42,7 +42,6 @@ import '../safe_mode/safe_mode_banner.dart';
 import '../share/share_entry.dart';
 import '../theme/app_icons.dart';
 import '../theme/theme.dart';
-import '../web/mode_home.dart';
 import '../workspace/text_prompt.dart';
 import '../workspace/workspace_switcher.dart';
 import '../workspace/workspaces_page.dart';
@@ -77,7 +76,7 @@ Color sessionSelectionColor(BuildContext context) {
 /// The sessions drawer: brand and "新对话" on top, search, the workspace
 /// switcher with the list's options, the status filters, the active host's
 /// conversations (pinned, folders, then by day), and an identity bar at the
-/// bottom (the host, 网页版, 设置). In multi-select the brand row and the
+/// bottom (the host, features, settings). In multi-select the brand row and the
 /// identity bar give way to the selection header and its action bar.
 class SessionsDrawer extends ConsumerWidget {
   const SessionsDrawer({
@@ -166,15 +165,9 @@ class SessionsDrawer extends ConsumerWidget {
                           child: FittedBox(fit: BoxFit.scaleDown, child: BrandLockup(height: 19)),
                         ),
                       ),
-                      // 模式 and 网页模式, quietly: the one solid element stays 新对话.
-                      const WebModeKey(tier: GlassTier.pill),
-                      const SizedBox(width: 8),
                       // When even the lockup's room is not enough, 新对话
                       // keeps its glyph and lets its words go.
-                      NewChatButton(
-                        onTap: newChat,
-                        compact: NewChatButton.widthOf(context) > box.maxWidth - (36 + 8 + 36 + 8),
-                      ),
+                      NewChatButton(onTap: newChat, compact: NewChatButton.widthOf(context) > box.maxWidth - 36),
                     ],
                   ),
                 ),
@@ -951,8 +944,7 @@ class IdentityBar extends ConsumerWidget {
   /// Local hosts have engine details, not a remote network path.
   final VoidCallback? onLocalDetails;
 
-  /// 全部功能: what there is to do now. (网页版 is in 全部功能, in 设置 ›
-  /// 界面 and on the brand row's switch.)
+  /// 全部功能: what there is to do now.
   final VoidCallback onFeatures;
   final VoidCallback onSettings;
 

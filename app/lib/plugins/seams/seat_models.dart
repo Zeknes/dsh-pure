@@ -95,7 +95,7 @@ class SeatContext {
   final SeatPlacement placement;
 
   /// The host serves DSH Web to this connection (not over the relay): islands
-  /// and "open in DSH Web" entries are possible.
+  /// and "unavailable" entries are possible.
   final bool webAvailable;
 
   @override

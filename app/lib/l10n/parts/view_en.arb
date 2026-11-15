@@ -375,7 +375,7 @@
   "viewContinueNotice": "\n({text})\n",
   "viewShareAltMarker": "[{alt}]",
   "viewModelThinkingXhigh": "Extra high",
-  "viewUiDialectWebOnly": "{kind} · View in DSH Web",
+  "viewUiDialectWebOnly": "{kind} · Not supported",
   "viewUiDialectKindInteractive": "Interactive part",
   "viewUiDialectKindChart": "Chart",
   "viewUiDialectKindDiagram": "Diagram",
@@ -386,6 +386,6 @@
   "viewUiDialectKindFiles": "File tree",
   "viewUiDialectKindMap": "Map",
   "viewUiDialectKindOther": "This part",
-  "viewUiDialectInvalid": "This block shows in DSH Web",
-  "viewUiDialectNote": "Shown in DSH Web"
+  "viewUiDialectInvalid": "This content is not supported",
+  "viewUiDialectNote": "Not supported"
 }

@@ -440,7 +440,7 @@
     }
   },
   "botsMobileUnsupportedTitle": "DS Bot isn't on mobile yet",
-  "botsMobileApiRequired": "Use it in DSH Web for now",
-  "botsMobileApiMissing": "Not on mobile yet. Use it in DSH Web for now",
+  "botsMobileApiRequired": "This host’s plugin does not yet support mobile. Update the plugin and retry.",
+  "botsMobileApiMissing": "Not supported on mobile. Install or update the plugin.",
   "botsCreationConnectionChanged": "The connection changed. Reopen this form to create on the current host."
 }

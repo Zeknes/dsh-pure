@@ -115,7 +115,7 @@ class _PluginSeamControlsState extends ConsumerState<PluginSeamControls> {
               icon: icon,
               title: o.label?.isNotEmpty == true ? o.label! : label,
               subtitle: o.label?.isNotEmpty == true ? label : null,
-              meta: onWeb ? l10n.commonWeb : null,
+              meta: onWeb ? l10n.pluginConfigUnsupported : null,
               chevron: true,
               onTap: () => unawaited(
                 Navigator.of(

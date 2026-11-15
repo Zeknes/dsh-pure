@@ -196,7 +196,7 @@ enum UiPetPosition {
   final String wire;
 }
 
-/// `plugins.seats` values; [web] is the seat's 「在网页版打开」 row.
+/// `plugins.seats` values; [web] is the seat's 「暂不支持」 row.
 enum UiSeatMode { native, island, web, hidden }
 
 /// `theme.accentPreset` ([presetId]) or `theme.accent` ([rgb], 0xRRGGBB).
