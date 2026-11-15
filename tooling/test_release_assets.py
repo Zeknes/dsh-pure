@@ -275,11 +275,21 @@ class PublishedTest(unittest.TestCase):
         self.assertEqual(got, cache / "v1.0.7" / "dsh-go-1.0.7-arm64.apk")
         self.assertEqual(got.read_bytes(), original.read_bytes())
         self.assertEqual(published_apk("v1.0.7", cache), got)
-        self.assertEqual(self.log.read_text().count("release download v1.0.7"), 1)
+        self.assertEqual(self.log.read_text().count("--pattern dsh-go-1.0.7-arm64.apk"), 1)
         # A damaged copy in the cache is fetched again.
         got.write_bytes(b"truncated")
         self.assertEqual(published_apk("v1.0.7", cache).read_bytes(), original.read_bytes())
-        self.assertEqual(self.log.read_text().count("release download v1.0.7"), 2)
+        self.assertEqual(self.log.read_text().count("--pattern dsh-go-1.0.7-arm64.apk"), 2)
+
+    def test_downloads_pure_named_release(self):
+        folder = self.assets / 'v1.0.9'
+        folder.mkdir(parents=True)
+        name = 'dsh-pure-1.0.9-arm64.apk'
+        original = apk(folder / name, 9)
+        (folder / 'SHA256SUMS').write_text(f'{sha(original)}  {name}\n')
+        got = published_apk('v1.0.9', self.dir / 'cache')
+        self.assertEqual(got.name, name)
+        self.assertEqual(got.read_bytes(), original.read_bytes())
 
     def test_an_apk_unlike_its_sums_is_refused(self):
         self.release("v1.0.6", sums_for="00" * 32)

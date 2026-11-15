@@ -287,7 +287,7 @@ void main() {
     await notify.settle();
     expect(notifyChannel.shown, hasLength(1));
     final post = notifyChannel.shown.single;
-    expect(post.title, 'DSH Personal');
+    expect(post.title, 'DSH Pure');
     expect(post.host, HostRef.local);
     expect(post.sessionId, 's1');
     expect(post.eventId, 'q1');

@@ -1493,7 +1493,7 @@ Local recognition is enabled by default. While off, recognition requests do not
 trigger SDK loading or initialization. Turning it off prevents new recognition,
 but does not uninstall
 the SDK or promise to clear or stop sending previously accumulated SDK statistics.
-DSH Personal does not control this SDK's independent data collection.
+DSH Pure does not control this SDK's independent data collection.
 The Apache 2.0 license for documentation sample code is not the license for
 this SDK binary. This notice does not replace Google's SDK terms.
 ''';

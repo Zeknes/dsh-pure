@@ -216,7 +216,7 @@ object LiveActivity {
             )
             builder.addAction(Notification.Action.Builder(null, AppStrings.get(ctx, R.string.service_stop_phone), stop).build())
         }
-        val icon = Icon.createWithResource(ctx, R.drawable.ic_personal_launcher)
+        val icon = Icon.createWithResource(ctx, R.mipmap.ic_launcher)
         XiaomiFocus.apply(ctx, builder, c, icon)
         nm.notify(ID, builder.build())
     }

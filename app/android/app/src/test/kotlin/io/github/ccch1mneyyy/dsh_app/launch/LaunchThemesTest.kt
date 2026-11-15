@@ -45,7 +45,7 @@ class LaunchThemesTest {
             val entryIcon = icons.getValue(alias.className)
             assertEquals(alias.toString(), entryIcon, theme["android:windowSplashScreenAnimatedIcon"])
             // The same resource the launch screen draws in its first frames.
-            assertEquals(alias.toString(), "@drawable/ic_personal_launcher", entryIcon)
+            assertEquals(alias.toString(), "@mipmap/" + LauncherIcons.mipmapOf(alias.variant), entryIcon)
         }
     }
 

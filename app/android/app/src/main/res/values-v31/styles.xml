@@ -33,16 +33,16 @@
     <!-- Android 13+ (SplashScreen.setSplashScreenTheme, launch/LaunchThemes.kt): the splash of
          the next launches. Each 桌面图标's own icon, the same one its activity-alias names. -->
     <style name="LaunchTheme.Mist">
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_personal_launcher</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
     </style>
     <style name="LaunchTheme.Night">
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_personal_launcher</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_night</item>
     </style>
     <style name="LaunchTheme.Frost">
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_personal_launcher</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_frost</item>
     </style>
     <style name="LaunchTheme.Ink">
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_personal_launcher</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_ink</item>
     </style>
     <!-- A custom launch screen on white or black: no icon, that colour (the picture fades in over it). -->
     <style name="LaunchTheme.White">

@@ -19,7 +19,7 @@ import java.util.Locale
 object AppStrings {
     /** The app's name as the phone shows it (`android:label` in AndroidManifest.xml), in every
      *  language: notification titles and their fallbacks. */
-    const val APP_NAME = "DSH Personal"
+    const val APP_NAME = "DSH Pure"
 
     private const val PREFS = "FlutterSharedPreferences"
     private const val KEY = "flutter.app_language"

@@ -156,13 +156,23 @@ def listed(sums: pathlib.Path, name: str) -> str | None:
 def published_apk(tag: str, cache: pathlib.Path) -> pathlib.Path:
     """[tag]'s arm64 APK from its GitHub release, kept in [cache], as the
     release's SHA256SUMS says it is."""
-    name = f"dsh-go-{tag.removeprefix('v')}-arm64.apk"
-    apk, sums = cache / tag / name, cache / tag / "SHA256SUMS"
-    if not (apk.is_file() and listed(sums, name) == sha256(apk)):
-        gh("release", "download", tag, "--pattern", name, "--pattern", "SHA256SUMS", "--dir", str(cache / tag), "--clobber")
-        if listed(sums, name) != sha256(apk):
+    version = tag.removeprefix('v')
+    sums = cache / tag / "SHA256SUMS"
+    names = [f"dsh-pure-{version}-arm64.apk", f"dsh-go-{version}-arm64.apk"]
+    for name in names:
+        apk = cache / tag / name
+        if apk.is_file() and listed(sums, name) == sha256(apk):
+            return apk
+    for name in names:
+        apk = cache / tag / name
+        try:
+            gh("release", "download", tag, "--pattern", name, "--pattern", "SHA256SUMS", "--dir", str(cache / tag), "--clobber")
+        except ReleaseError:
+            continue
+        if not apk.is_file() or listed(sums, name) != sha256(apk):
             raise ReleaseError(f"{tag}: {name} doesn't match the release's SHA256SUMS")
-    return apk
+        return apk
+    raise ReleaseError(f"{tag}: no compatible arm64 APK found (--delta-from 0 makes no patches)")
 
 
 def base_layer_sha256(path: pathlib.Path) -> str | None:
@@ -262,7 +272,7 @@ def main() -> None:
     assets = {}
     sums = []
     for flavor, path in sources.items():
-        asset = f"dsh-go-{name}-{flavor}.apk"
+        asset = f"dsh-pure-{name}-{flavor}.apk"
         target = args.out / asset
         shutil.copyfile(path, target)
         digest = sha256(target)

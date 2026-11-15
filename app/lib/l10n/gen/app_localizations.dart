@@ -16343,7 +16343,7 @@ abstract class L10n {
   /// No description provided for @hubAbout.
   ///
   /// In zh, this message translates to:
-  /// **'关于 DSH Go'**
+  /// **'关于 DSH Pure'**
   String get hubAbout;
 
   /// No description provided for @hubAboutAuthor.
