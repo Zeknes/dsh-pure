@@ -28,8 +28,9 @@ enum VoicePhase { idle, starting, listening, transcribing }
 enum VoiceEngine { system, engine, cloud }
 
 class VoiceMessage {
-  const VoiceMessage(this.text, {this.openSettings = false, this.change = false});
+  const VoiceMessage(this.text, {this.openSettings = false, this.change = false, this.notHeard = false});
   final String text;
+  final bool notHeard;
 
   /// The app's system settings page (microphone permission) helps.
   final bool openSettings;
@@ -509,7 +510,7 @@ class VoiceInputController extends ChangeNotifier with WidgetsBindingObserver {
     if (!_current(operation)) return;
     if (cloud == null || wav == null || wav.length < 44 + 9600) {
       _finish();
-      _say(VoiceMessage(appL10n.chatVoiceNotHeard));
+      _say(VoiceMessage(appL10n.chatVoiceNotHeard, notHeard: true));
       return;
     }
     try {
@@ -517,7 +518,7 @@ class VoiceInputController extends ChangeNotifier with WidgetsBindingObserver {
       if (!_current(operation)) return;
       if (text.isEmpty) {
         _finish();
-        _say(VoiceMessage(appL10n.chatVoiceNotHeard));
+        _say(VoiceMessage(appL10n.chatVoiceNotHeard, notHeard: true));
         return;
       }
       _apply(text, provisional: false);
@@ -603,7 +604,7 @@ class VoiceInputController extends ChangeNotifier with WidgetsBindingObserver {
     }
     if (wav == null || wav.length < 44 + 9600) {
       _finish();
-      _say(VoiceMessage(appL10n.chatVoiceNotHeard));
+      _say(VoiceMessage(appL10n.chatVoiceNotHeard, notHeard: true));
       return;
     }
     try {
@@ -619,7 +620,7 @@ class VoiceInputController extends ChangeNotifier with WidgetsBindingObserver {
       }
       if (transcript.text.isEmpty) {
         _finish();
-        _say(VoiceMessage(appL10n.chatVoiceNotHeard));
+        _say(VoiceMessage(appL10n.chatVoiceNotHeard, notHeard: true));
         return;
       }
       _apply(transcript.text, provisional: false);
@@ -668,7 +669,9 @@ class VoiceInputController extends ChangeNotifier with WidgetsBindingObserver {
       onRecognized?.call();
     }
     _finish();
-    if (!VoiceError.noSpeech.contains(code) || heard.trim().isEmpty) _say(VoiceMessage(voiceErrorText(code)));
+    if (!VoiceError.noSpeech.contains(code) || heard.trim().isEmpty) {
+      _say(VoiceMessage(voiceErrorText(code), notHeard: code == 7));
+    }
   }
 
   void _onEvent(int operation, VoiceEvent event) {
@@ -698,7 +701,7 @@ class VoiceInputController extends ChangeNotifier with WidgetsBindingObserver {
     if (text.trim().isEmpty) {
       _restoreDraft();
       _finish();
-      _say(VoiceMessage(appL10n.chatVoiceNotHeard));
+      _say(VoiceMessage(appL10n.chatVoiceNotHeard, notHeard: true));
     } else {
       _apply(text, provisional: false);
       onRecognized?.call();

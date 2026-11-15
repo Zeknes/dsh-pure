@@ -21,6 +21,7 @@ import '../settings/voice_settings_page.dart';
 import '../theme/app_icons.dart';
 import '../theme/theme.dart';
 import 'voice/voice_controller.dart';
+import 'voice/voice_notice.dart';
 import 'voice/voice_widgets.dart';
 
 /// The editor's line height, as a multiple of its font size.
@@ -177,6 +178,7 @@ const double _keyGap = 6;
 const double _fontSize = 15.0;
 
 class _ComposerState extends State<Composer> with SingleTickerProviderStateMixin {
+  final _voiceNotice = VoiceNotice();
   Duration? _lastEscape;
   // Keep the editor and its input connection when the footer changes the layout.
   final _fieldKey = GlobalKey();
@@ -336,6 +338,7 @@ class _ComposerState extends State<Composer> with SingleTickerProviderStateMixin
 
   @override
   void dispose() {
+    _voiceNotice.dispose();
     widget.controller.removeListener(_draftChanged);
     _draftEmpty.dispose();
     widget.focusNode?.removeListener(_focusChanged);
@@ -349,6 +352,11 @@ class _ComposerState extends State<Composer> with SingleTickerProviderStateMixin
   void _voiceMessage(VoiceMessage message) {
     if (!mounted) return;
     final voice = widget.voice;
+    if (message.notHeard && !message.openSettings && !message.change) {
+      _voiceNotice.show(context, message.text);
+      return;
+    }
+    _voiceNotice.dispose();
     ScaffoldMessenger.maybeOf(context)
       ?..hideCurrentSnackBar()
       ..showSnackBar(
