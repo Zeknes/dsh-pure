@@ -27,7 +27,7 @@ internal data class SelfUpdateReceipt(
 
 /** This is an installer capability, not a shell command API. */
 internal object SelfUpdatePolicy {
-    const val PACKAGE = "io.github.zeknes.dsh_personal"
+    const val PACKAGE = "io.github.zeknes.dsh_pure"
     const val REVISION = "dsh-self-update-1"
     const val TAG = "dsh_self_update_v1"
     const val MAX_APK_BYTES = 2L * 1024 * 1024 * 1024

@@ -31,7 +31,9 @@ class SelfUpdatePolicyTest {
     }
 
     @Test fun packageSignerVersionMustAllMatch() {
+        assertEquals("io.github.zeknes.dsh_pure", SelfUpdatePolicy.PACKAGE)
         SelfUpdatePolicy.validate(newer, old, 11)
+        error("packageMismatch") { SelfUpdatePolicy.validate(newer.copy(packageName = "io.github.zeknes.dsh_personal"), old, 11) }
         error("packageMismatch") { SelfUpdatePolicy.validate(newer.copy(packageName = "another.app"), old, 11) }
         error("packageMismatch") { SelfUpdatePolicy.validate(newer, old.copy(packageName = "another.app"), 11) }
         error("signatureMismatch") { SelfUpdatePolicy.validate(newer.copy(signers = setOf("attacker")), old, 11) }

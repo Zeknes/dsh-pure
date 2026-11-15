@@ -4,7 +4,7 @@
 
 ## 已完成
 
-- 应用包名 `io.github.zeknes.dsh_personal`，名称 `DSH Personal`，与官方包独立；默认更新源为 `Zeknes/dsh-go-personal`，不默认使用官方镜像或 beta。
+- 应用包名 `io.github.zeknes.dsh_pure`，与旧个人包 `io.github.zeknes.dsh_personal` 和官方包独立；新旧包可并存，不能覆盖升级或自动迁移旧数据；默认更新源为 `Zeknes/dsh-go-personal`，不默认使用官方镜像或 beta。
 - 移除求 Star 弹窗、计时状态及更新页催 Star；保留关于页手动项目链接。移除伙伴小屋、桌宠、酒馆、公开托管分享、应用内回放页面及创意工坊等入口；保留本地文件和文本导出、离线 HTML viewer、插件市场、终端、文件、手机操控、远程连接及其他生产力功能。
 - 个人测试 APK 使用 Ubuntu 26.04.1、Node.js 24.22.1、DSH 0.2.2-rc.1 和 Termux PRoot 5.1.107.102。新装使用新基础系统，旧 Ubuntu 24.04 运行时不支持原地跨基础系统升级。
 - 已交付测试 APK：ARM64，版本 `1.0.16`、versionCode `11151209`，SHA-256 `c7569f5cc6490f7e156dc2d6180118b17f465eff93be8e122ffbbf02a2fcd40c`。实际构建源码是独立集成快照 `d1ac113fe91db9840ca18ddf17cd869f0608589e`，来自 App `e5044472a7bb9e2036f86c022b6b5f3fdfba4410` 和 runtime `a5337c67cc8902f0a4829b8a354658e4c0549c50`，另修正 runtime 输入测试中的旧版本断言；源码 bundle SHA-256 `4855a600695fccb3a7751a9a2c790260eee77a2629b6284de361b5d1ad96df4f`。该 runtime 尚未合入个人 main。

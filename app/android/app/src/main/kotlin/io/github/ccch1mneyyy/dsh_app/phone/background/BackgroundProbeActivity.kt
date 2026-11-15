@@ -140,7 +140,7 @@ class BackgroundProbeActivity : Activity() {
 
 /** Private Binder messages, never marshalled into the adb/root byte stream. */
 internal object ProbeActivityContract {
-    const val PACKAGE = "io.github.zeknes.dsh_personal"
+    const val PACKAGE = "io.github.zeknes.dsh_pure"
     const val ACTIVITY = "io.github.ccch1mneyyy.dsh_app.phone.background.BackgroundProbeActivity"
     const val RECEIVER = "receiver"
     const val NONCE = "nonce"
