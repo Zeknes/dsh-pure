@@ -8,7 +8,7 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicReference
 
-/** A pause holds the task: the idle limit never ends it, so DSH can't go on by itself. */
+/** A pause blocks actions without retaining its task and screen leases forever. */
 class PhoneTasksPauseTest {
     @Volatile private var now = 1_000L
     private fun tasks() = PhoneTasks(clock = { now })
@@ -23,10 +23,17 @@ class PhoneTasksPauseTest {
         }.apply { isDaemon = true; start() }
 
         fun returnedWithin(ms: Long): Boolean = done.await(ms, TimeUnit.MILLISECONDS)
+        fun waitUntilBlocked(): Boolean {
+            repeat(5_000) {
+                if (thread.state == Thread.State.TIMED_WAITING) return true
+                Thread.sleep(1)
+            }
+            return false
+        }
         fun interrupt() = thread.interrupt()
     }
 
-    @Test fun aPauseOutlastingTheIdleLimitStaysPausedAndKeepsTheWaiver() {
+    @Test fun aPauseOutlastingTheIdleLimitReleasesTheTask() {
         val t = tasks()
         val seen = mutableListOf<PhoneTasks.Snapshot>()
         t.callStarted()
@@ -38,22 +45,21 @@ class PhoneTasksPauseTest {
         t.addListener { seen += it }
 
         now += t.idleMs * 4
-        assertFalse(t.expireIdle())
+        assertTrue(t.expireIdle())
         val s = t.snapshot()
-        assertTrue(s.active)
-        assertTrue(s.paused)
-        assertTrue(s.waived)
-        assertTrue(t.isPaused)
-        assertTrue(t.isWaived)
-        assertTrue(t.isApproved("com.example"))
-        // Nobody heard the task end.
-        assertTrue(seen.none { !it.active })
-        // A call arriving now waits on the same task instead of starting a fresh one.
+        assertFalse(s.active)
+        assertFalse(s.paused)
+        assertFalse(s.waived)
+        assertFalse(t.isPaused)
+        assertFalse(t.isWaived)
+        assertFalse(t.isApproved("com.example"))
+        assertTrue(seen.any { !it.active })
+        // A later call starts a fresh task instead of inheriting the old leases.
         t.callStarted()
         val next = t.begin() as PhoneTasks.Begin.Go
-        assertFalse(next.newTask)
-        assertEquals(first.taskId, next.taskId)
-        assertFalse(t.awaitResume(0))
+        assertTrue(next.newTask)
+        assertTrue(first.taskId != next.taskId)
+        assertTrue(t.awaitResume(0))
         t.callEnded(t.activeOwner())
     }
 
@@ -61,23 +67,18 @@ class PhoneTasksPauseTest {
         val t = tasks()
         t.callStarted()
         t.begin()
+        t.callEnded(t.activeOwner())
         t.waive()
         t.setPaused(true)
         val waiter = Waiter(t)
         try {
+            assertTrue(waiter.waitUntilBlocked())
             now += t.idleMs + 1
-            assertFalse(t.expireIdle())
-            now += t.idleMs * 3
-            assertFalse(t.expireIdle())
-            // Still waiting for the person: the expiry did not clear the pause under it.
-            assertFalse(waiter.returnedWithin(300))
-            assertTrue(t.isPaused)
-            assertTrue(t.isWaived)
-            // 继续 on the pill is what lets it go on.
-            t.setPaused(false)
+            assertTrue(t.expireIdle())
             assertTrue(waiter.returnedWithin(5_000))
-            assertEquals(true, waiter.result.get())
-            assertTrue(t.isWaived)
+            assertEquals(false, waiter.result.get())
+            assertFalse(t.isPaused)
+            assertFalse(t.isWaived)
         } finally {
             waiter.interrupt()
             t.callEnded(t.activeOwner())

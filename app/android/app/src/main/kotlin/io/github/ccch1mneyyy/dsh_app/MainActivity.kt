@@ -29,6 +29,7 @@ import java.util.TimeZone
 
 class MainActivity : FlutterActivity() {
     private var appChannel: MethodChannel? = null
+    private var remoteBackgroundChannel: MethodChannel? = null
 
     /**
      * One engine per process, outliving this activity: swiping the app away from recents keeps
@@ -112,6 +113,7 @@ class MainActivity : FlutterActivity() {
     override fun onResume() {
         super.onResume()
         io.github.ccch1mneyyy.dsh_app.phone.background.BackgroundControl.get(applicationContext).restoreKeptChannel()
+        io.github.ccch1mneyyy.dsh_app.remote.RemoteBackgroundService.onHostStarted(applicationContext)
         inForeground = true
         applyRefreshRate()
     }
@@ -130,6 +132,7 @@ class MainActivity : FlutterActivity() {
 
     override fun onPause() {
         inForeground = false
+        io.github.ccch1mneyyy.dsh_app.remote.RemoteBackgroundService.onHostStopped()
         super.onPause()
     }
 
@@ -137,6 +140,19 @@ class MainActivity : FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         appChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "dsh/app")
+        remoteBackgroundChannel = MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            "io.github.ccch1mneyyy.dsh_app/remote_background",
+        ).also { channel ->
+            channel.setMethodCallHandler { call, result ->
+                if (call.method == "setRemoteActive") {
+                    io.github.ccch1mneyyy.dsh_app.remote.RemoteBackgroundService.setRemoteActive(
+                        applicationContext, call.arguments as Boolean,
+                    )
+                    result.success(null)
+                } else result.notImplemented()
+            }
+        }
         appChannel!!.setMethodCallHandler { call, result ->
             when (call.method) {
                 "getTimeZoneId" -> result.success(TimeZone.getDefault().id)
@@ -165,6 +181,8 @@ class MainActivity : FlutterActivity() {
     override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
         appChannel?.setMethodCallHandler(null)
         appChannel = null
+        remoteBackgroundChannel?.setMethodCallHandler(null)
+        remoteBackgroundChannel = null
         super.cleanUpFlutterEngine(flutterEngine)
     }
 

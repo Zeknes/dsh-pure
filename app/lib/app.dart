@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'l10n/l10n.dart';
 import 'performance/performance_state.dart';
+import 'remote/remote_background.dart';
 import 'state/app_info.dart';
 import 'state/appearance_state.dart';
 import 'state/locale_state.dart';
@@ -133,6 +134,7 @@ class _DshAppState extends ConsumerState<DshApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final themeMode = ref.watch(uiThemeModeProvider.select((s) => s.value));
+    ref.watch(remoteBackgroundProvider);
     final appearance = ref.watch(appearanceProvider);
     final waiting =
         !appearance.loaded ||
