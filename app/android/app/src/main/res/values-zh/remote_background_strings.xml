@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="remote_background_channel">远程连接保活</string>
+    <string name="remote_background_notification">保持已连接的远程主机在后台可达</string>
+</resources>

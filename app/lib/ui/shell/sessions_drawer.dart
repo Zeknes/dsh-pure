@@ -42,6 +42,7 @@ import '../safe_mode/safe_mode_banner.dart';
 import '../share/share_entry.dart';
 import '../theme/app_icons.dart';
 import '../theme/theme.dart';
+import '../web/mode_home.dart' show WebModeKey;
 import '../workspace/text_prompt.dart';
 import '../workspace/workspace_switcher.dart';
 import '../workspace/workspaces_page.dart';
@@ -167,7 +168,9 @@ class SessionsDrawer extends ConsumerWidget {
                       ),
                       // When even the lockup's room is not enough, 新对话
                       // keeps its glyph and lets its words go.
-                      NewChatButton(onTap: newChat, compact: NewChatButton.widthOf(context) > box.maxWidth - 36),
+                      const WebModeKey(),
+                      const SizedBox(width: 8),
+                      NewChatButton(onTap: newChat, compact: NewChatButton.widthOf(context) > box.maxWidth - 80),
                     ],
                   ),
                 ),

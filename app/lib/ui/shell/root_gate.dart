@@ -22,6 +22,7 @@ import '../onboarding/onboarding_flow.dart';
 import '../onboarding/setup_progress.dart';
 import '../remote/remote_screen.dart';
 import '../theme/theme.dart';
+import '../web/mode_home.dart';
 import 'home_shell.dart';
 import 'brand_mark.dart';
 
@@ -363,7 +364,7 @@ class _RootGateState extends ConsumerState<RootGate> {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (mounted) _maybeAutoStart();
         });
-        child = widget.home ?? const HomeShell();
+        child = widget.home ?? const ModeHome();
       }
     }
     if (child is! _Splash && !_launchReady) {

@@ -5,8 +5,8 @@ import java.util.concurrent.CopyOnWriteArrayList
 /**
  * The current phone task: roughly one DSH turn. It starts with the first phone tool call,
  * and ends on stop (overlay, notification, Flutter, screen off), or after [idleMs] without calls.
- * A paused task is never idle, nor is one with a call still running: a pause holds the task — its
- * waiver included — until the person resumes or stops it, and the idle clock restarts on resume.
+ * A pause blocks actions but does not retain screen leases forever; its idle deadline continues.
+ * A call still running is never idle.
  * Holds the per-task app approvals and 本任务免确认 waiver, pause, and the person's interjections
  * for the agent.
  *
@@ -95,8 +95,7 @@ class PhoneTasks(
                 return Begin.Refused(STOPPED_MESSAGE + (stopReason?.let { "（$it）" } ?: ""))
             }
             interrupted = false
-            // This call is in flight already, so only the pause and the clock count here.
-            if (active && !paused && now - lastCallAt > idleMs) endLocked()
+            if (active && now - lastCallAt > idleMs) endLocked()
             if (!active) {
                 active = true
                 taskId = idSource?.invoke() ?: nextId++
@@ -507,8 +506,8 @@ class PhoneTasks(
             active && !idle && waived, lifecycle, interrupted, if (stopped) stopSource else null)
     }
 
-    /** Idle: no call running, not paused, and nothing for [idleMs]. */
-    private fun idleLocked(now: Long): Boolean = active && !paused && inFlight == 0 && now - lastCallAt > idleMs
+    /** Idle: no call running and nothing for [idleMs], including while paused. */
+    private fun idleLocked(now: Long): Boolean = active && inFlight == 0 && now - lastCallAt > idleMs
 
     private fun endLocked() {
         lifecycle++

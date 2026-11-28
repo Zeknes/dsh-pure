@@ -30,6 +30,7 @@ class WebViewPage extends StatefulWidget {
     this.reloadAfterBackground,
     this.lightBackground = const Color(0xFFFFFFFF),
     this.darkBackground = const Color(0xFF151517),
+    this.onSwitchToNative,
   });
   final Uri url;
   final String title;
@@ -39,6 +40,7 @@ class WebViewPage extends StatefulWidget {
   final Duration? reloadAfterBackground;
   final Color lightBackground;
   final Color darkBackground;
+  final VoidCallback? onSwitchToNative;
   @override
   State<WebViewPage> createState() => _WebViewPageState();
 }
@@ -458,11 +460,11 @@ class _WebViewPageState extends State<WebViewPage> {
   }
 
   Widget _leading(double size) => GlassIconButton(
-    icon: AppIcons.back,
-    tooltip: context.l10n.commonBack,
+    icon: widget.onSwitchToNative == null ? AppIcons.back : AppIcons.swap,
+    tooltip: widget.onSwitchToNative == null ? context.l10n.commonBack : context.l10n.webSwitchToNative,
     size: size,
     iconSize: math.min(22, size * 0.6),
-    onPressed: _back,
+    onPressed: widget.onSwitchToNative ?? _back,
   );
 
   Widget _bar(BuildContext context, EdgeInsets padding) {

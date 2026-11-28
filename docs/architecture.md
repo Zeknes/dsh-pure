@@ -323,7 +323,7 @@ DSH npm 前缀（runtime/locks）→ rtbuild 按 series 应用 139 个补丁（p
 - proot 等可执行文件以 `lib*.so` 放 jniLibs，`useLegacyPackaging = true` 使其解压到 `nativeLibraryDir`。
 - 本地连接：原生层启动 `dsh web --host 127.0.0.1 --port 3080 --no-open`，从 stdout 解析 token；
   Dart 侧 `dsh_client` 用 token 换 cookie（`dsh-auth-<base64url(sha256(authority))>`，30 天，绑定 host:port），
-  之后 HTTP/WS 带 cookie、不带 Origin；App 不内置 DSH Web 界面。
+  之后 HTTP/WS 带 cookie、不带 Origin；App 默认使用原生界面，抽屉可切换本机 DSH Web 首页并切回。
 
 ## 6. 关键约束速查
 

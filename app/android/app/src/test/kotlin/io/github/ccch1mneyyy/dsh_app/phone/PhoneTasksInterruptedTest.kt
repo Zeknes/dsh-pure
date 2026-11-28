@@ -112,7 +112,7 @@ class PhoneTasksInterruptedTest {
         assertFalse(tasks.snapshot().interrupted)
     }
 
-    @Test fun pausedAndInFlightTasksRemainPubliclyActivePastTheIdleDeadline() {
+    @Test fun onlyInFlightTasksRemainPubliclyActivePastTheIdleDeadline() {
         var time = 0L
         val paused = PhoneTasks(clock = { time }, idleMs = 10)
         paused.begin(); paused.setPaused(true)
@@ -120,11 +120,11 @@ class PhoneTasksInterruptedTest {
         val owner = (running.begin() as PhoneTasks.Begin.Go).owner
         running.callStarted()
         time = 11
-        assertTrue(paused.snapshot().active)
+        assertFalse(paused.snapshot().active)
         assertTrue(running.snapshot().active)
         paused.stop("stop paused")
         running.stop("stop running")
-        assertTrue(paused.snapshot().interrupted)
+        assertFalse(paused.snapshot().interrupted)
         assertTrue(running.snapshot().interrupted)
         running.callEnded(owner)
     }

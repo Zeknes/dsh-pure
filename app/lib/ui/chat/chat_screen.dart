@@ -388,8 +388,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with WidgetsBindingObse
       // The capability probe is async and can finish after this page is gone.
       client: () => mounted ? ref.read(activeConnectionProvider).value?.client : null,
       inputOwner: () => mounted ? ref.read(activeHostProvider) : null,
-      onRecognized: () {
-      },
+      onRecognized: () {},
     );
     // A download or deletion changes capabilities without replacing the host.
     ref.listenManual(voiceModelProvider.select((s) => s.status == VoiceModelStatus.ready), (_, _) {
@@ -774,7 +773,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with WidgetsBindingObse
     } else {
       ok = await chat.send(text, attachments: drafts, mode: mode);
     }
-    if (!ok && _sameConnection(client, generation)) _giveBack(sessionId, typed, drafts, quote: quote);
+    if (!ok && _sameHost(client)) _giveBack(sessionId, typed, drafts, quote: quote);
   }
 
   // A failed send belongs to the Host that accepted it. The controller may
@@ -784,6 +783,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with WidgetsBindingObse
       mounted &&
       identical(ref.read(activeConnectionProvider).value?.client, client) &&
       identical(client.mux.generation, generation);
+
+  bool _sameHost(DshClient client) => mounted && identical(ref.read(activeConnectionProvider).value?.client, client);
 
   /// 没发出去:把字、附件和引用还给那个对话(用户还没开始打新的才还)。
   void _giveBack(String sessionId, String text, List<DraftAttachment> attachments, {String? quote}) {
@@ -813,9 +814,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with WidgetsBindingObse
   Future<void> _resend(String sessionId, String text, List<DraftAttachment> images) async {
     final client = ref.read(activeConnectionProvider).value?.client;
     if (client == null) return;
-    final generation = client.mux.generation;
     final ok = await ref.read(chatProvider(sessionId).notifier).send(text, attachments: images);
-    if (ok || !_sameConnection(client, generation)) return;
+    if (ok || !_sameHost(client)) return;
     final (:quote, :body) = splitQuote(text);
     _giveBack(sessionId, quote == null ? text : body, images, quote: quote);
   }
